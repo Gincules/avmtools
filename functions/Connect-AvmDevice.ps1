@@ -37,6 +37,7 @@ function Connect-AvmDevice {
         switch ($XmlResponse)
         {
             "GetAddressRangeResponse" { return $avmResponse.Envelope.Body.GetAddressRangeResponse; Break }
+            "GetAppRemoteInfoResponse" { return $avmResponse.Envelope.Body.GetAppRemoteInfoResponse; Break }
             "GetCommonLinkPropertiesResponse" { return $avmResponse.Envelope.Body.GetCommonLinkPropertiesResponse; Break }
             "GetConnectionTypeInfoResponse" { return $avmResponse.Envelope.Body.GetConnectionTypeInfoResponse; Break }
             "GetDeviceLogResponse" { return $avmResponse.Envelope.Body.GetDeviceLogResponse; Break }
