@@ -25,7 +25,7 @@ function Connect-AvmDevice {
     #>
     Param
     (
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][switch]$Insecure,
+        [switch]$Insecure,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
