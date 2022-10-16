@@ -47,12 +47,6 @@ function Get-AvmDeviceSecurityPort {
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential
     )
 
-    #if ($RemoteAccess) {
-    #    $UrlPath = "/tr064/upnp/control/deviceinfo"
-    #} else {
-    #    $UrlPath = "/upnp/control/deviceinfo"
-    #}
-
     $splatParameters = @{
         Insecure = $Insecure
         Url = $Url
