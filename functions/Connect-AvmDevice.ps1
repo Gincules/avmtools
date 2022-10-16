@@ -55,7 +55,6 @@ function Connect-AvmDevice {
     }
 
     if ($statusCode -eq 200) {
-        #return $avmResponse.Envelope.Body."$XmlResponse"
         return $avmResponse.Envelope.Body.$XmlResponse
     }
 }
