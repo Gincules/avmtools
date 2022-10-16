@@ -74,6 +74,8 @@ FunctionsToExport = @(
     "Get-AvmAppConfig",
     "Get-AvmAppInfo",
     "Get-AvmAppRemoteInfo",
+    "Get-AvmAuthInfo",
+    "Get-AvmAuthState",
     "Get-AvmDevicePersistentData",
     "Get-AvmDeviceSupportDataInfo",
     "Get-AvmDeviceUuid",
