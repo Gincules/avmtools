@@ -54,7 +54,5 @@ function Connect-AvmDevice {
         [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
     }
 
-    if ($statusCode -eq 200) {
-        return $avmResponse.Envelope.Body.$XmlResponse
-    }
+    return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
 }

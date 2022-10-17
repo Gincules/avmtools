@@ -33,7 +33,7 @@ Copyright = '(c) Gincules. All rights reserved.'
 Description = 'Query and configure a FRITZ!Box using TR-064 protocol'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '7.2'
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -76,6 +76,12 @@ FunctionsToExport = @(
     'Get-AvmAppRemoteInfo',
     'Get-AvmAuthInfo',
     'Get-AvmAuthState',
+    'Get-AvmDectNumberOfEntry',
+    'Get-AvmFilelinskPath',
+    'Get-AvmFilelinksNumberOfEntry',
+    'Get-AvmHomeautoInfo',
+    'Get-AvmHomeplugNumberOfEntry',
+    'Get-AvmHostFilterMarkTicket',
     'Get-AvmDevicePersistentData',
     'Get-AvmDeviceSupportDataInfo',
     'Get-AvmDeviceUuid',
