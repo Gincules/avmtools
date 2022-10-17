@@ -1,5 +1,4 @@
 # example for later used actions with IN direction
-
 $action = "GetSecurityPort"
 $urn = "urn:dslforumorg:service:DeviceInfo"
 $value = 1
