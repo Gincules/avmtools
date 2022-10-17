@@ -54,7 +54,7 @@ function Get-AvmManagementServerFirmwareDownload {
         Credential = $Credential
         SoapAction = "urn:dslforum-org:service:ManagementServer:1#X_AVM_DE_GetTR069FirmwareDownloadEnabled"
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-        XmlResponse = "d"
+        XmlResponse = "X_AVM_DE_GetTR069FirmwareDownloadEnabledResponse"
     }
     
     Connect-AvmDevice @splatParameters
