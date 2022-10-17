@@ -104,7 +104,6 @@ FunctionsToExport = @(
     'Get-AvmLanSubnetMask',
     'Get-AvmLayer3ForwardingDefaultConnectionService',
     'Get-AvmLayer3ForwardingNumberOfEntry',
-    'Get-AvmManagementServerFirmwareDownload',
     'Get-AvmManagementServerInfo',
     'Get-AvmMyFritzInfo',
     'Get-AvmMyFritzNumberOfService',
