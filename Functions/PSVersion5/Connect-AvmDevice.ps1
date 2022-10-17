@@ -23,6 +23,7 @@ function Connect-AvmDevice {
             PS C:\> [PSCredential]$Credential = Get-Credential
             PS C:\> Connect-AvmDevice -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential -SoapAction "urn:dslforum-org:service:DeviceInfo:1#GetSecurityPort" -UrlPath "/tr064/upnp/control/deviceinfo" -XmlResponse "GetSecurityPortResponse"
     #>
+
     Param
     (
         [switch]$Insecure,
@@ -47,6 +48,7 @@ function Connect-AvmDevice {
         }
     }
 
+    # PowerShell 5
     [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
 
     $avmResponse.Envelope.Body.$XmlResponse

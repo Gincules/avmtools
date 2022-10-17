@@ -55,16 +55,24 @@ function Get-AvmHostFilterMarkTicket {
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential
     )
 
+    #$splatParameters = @{
+    #    Insecure = $Insecure
+    #    Url = $Url
+    #    Port = $Port
+    #    Credential = $Credential
+    #    SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1#MarkTicket"
+    #    UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
+    #    XmlResponse = "MarkTicketResponse"
+    #}
+    
     $splatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
         Credential = $Credential
         SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1#MarkTicket"
-        #UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
         UrlPath = "/upnp/control/x_hostfilter"
         XmlResponse = "MarkTicketResponse"
     }
-    
     Connect-AvmDevice @splatParameters
 }

@@ -11,7 +11,6 @@ if (( $psMajor -ge 7) -And ($psMinor -ge 2)) {
     }
 }
 
-
 (Get-ChildItem -Path "$PSScriptRoot\Functions\Generic" -Recurse -Filter *.ps1) | ForEach-Object {
     . $_.FullName
 }
