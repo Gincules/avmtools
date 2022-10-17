@@ -49,7 +49,10 @@ function Connect-AvmDevice {
     }
 
     # PowerShell 5
-    [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
-
-    $avmResponse.Envelope.Body.$XmlResponse
+    Try {
+        [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
+        return $avmResponse.Envelope.Body.$XmlResponse
+    } Catch {
+        return $false
+    }
 }

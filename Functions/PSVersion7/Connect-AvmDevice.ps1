@@ -50,11 +50,14 @@ function Connect-AvmDevice {
     }
 
     # PowerShell 7
-    if ($Insecure) {
-        [xml]$avmResponse = (Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication)
-    } else {
-        [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
+    Try {
+        if ($Insecure) {
+            [xml]$avmResponse = (Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication)
+        } else {
+            [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
+        }
+        return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
+    } Catch {
+        return $false
     }
-
-    return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
 }
