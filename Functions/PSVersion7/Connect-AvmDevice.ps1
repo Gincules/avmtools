@@ -52,10 +52,9 @@ function Connect-AvmDevice {
     }
 
     Process {
-        # PowerShell 7
-
+        # PowerShell 7.2
         if ($Insecure) {
-                [xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+            [xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
         } else {
             [xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
         }

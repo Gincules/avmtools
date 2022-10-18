@@ -51,6 +51,7 @@ function Connect-AvmDevice {
     }
 
     Process {
+        # PowerShell 5.1
         [xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
     }
 
