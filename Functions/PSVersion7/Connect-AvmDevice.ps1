@@ -35,29 +35,33 @@ function Connect-AvmDevice {
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$XmlResponse
     )
 
-    $splatParameters = @{
-        Uri = $Url + ":" + $Port + $UrlPath
-        Method = "Post"
-        StatusCodeVariable = "statusCode"
-        Credential = $Credential
-        ContentType = "text/xml;charset=utf-8"
-        Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>'
-                
-        Headers = @{
-            "SoapAction" = $SoapAction
-            "User-Agent" = "AVM UPnP/1.0 Client 1.0"
+    Begin {
+        $splatParameters = @{
+            Uri = $Url + ":" + $Port + $UrlPath
+            Method = "Post"
+            StatusCodeVariable = "statusCode"
+            Credential = $Credential
+            ContentType = "text/xml;charset=utf-8"
+            Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>'
+                    
+            Headers = @{
+                "SoapAction" = $SoapAction
+                "User-Agent" = "AVM UPnP/1.0 Client 1.0"
+            }
         }
     }
 
-    # PowerShell 7
-    Try {
+    Process {
+        # PowerShell 7
+
         if ($Insecure) {
-            [xml]$avmResponse = (Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication)
+                [xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
         } else {
-            [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
+            [xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
         }
+    }
+
+    End {
         return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
-    } Catch {
-        return $false
     }
 }

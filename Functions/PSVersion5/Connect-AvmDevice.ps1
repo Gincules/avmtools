@@ -35,24 +35,26 @@ function Connect-AvmDevice {
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$XmlResponse
     )
 
-    $splatParameters = @{
-        Uri = $Url + ":" + $Port + $UrlPath
-        Method = "Post"
-        Credential = $Credential
-        ContentType = "text/xml;charset=utf-8"
-        Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>'
-                
-        Headers = @{
-            "SoapAction" = $SoapAction
-            "User-Agent" = "AVM UPnP/1.0 Client 1.0"
+    Begin {
+        $splatParameters = @{
+            Uri = $Url + ":" + $Port + $UrlPath
+            Method = "Post"
+            Credential = $Credential
+            ContentType = "text/xml;charset=utf-8"
+            Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>'
+                    
+            Headers = @{
+                "SoapAction" = $SoapAction
+                "User-Agent" = "AVM UPnP/1.0 Client 1.0"
+            }
         }
     }
 
-    # PowerShell 5
-    Try {
+    Process {
         [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
+    }
+
+    End {
         return $avmResponse.Envelope.Body.$XmlResponse
-    } Catch {
-        return $false
     }
 }
