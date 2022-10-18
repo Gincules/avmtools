@@ -51,7 +51,7 @@ function Connect-AvmDevice {
     }
 
     Process {
-        [xml]$avmResponse = (Invoke-RestMethod @splatParameters)
+        [xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
     }
 
     End {
