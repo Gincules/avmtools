@@ -55,6 +55,11 @@ function Connect-AvmDevice {
     }
 
     End {
-        return $avmResponse.Envelope.Body.$XmlResponse
+        if ($null -eq $avmResponse)
+        {
+            return $false
+        } else {
+            return $avmResponse.Envelope.Body.$XmlResponse
+        }
     }
 }
