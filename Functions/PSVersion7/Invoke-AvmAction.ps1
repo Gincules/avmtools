@@ -44,7 +44,7 @@ function Invoke-AvmAction {
 			Credential = $Credential
 			ContentType = "text/xml;charset=utf-8"
 			Body = $Body
-					
+
 			Headers = @{
 				"SoapAction" = $SoapAction
 				"User-Agent" = "AVM UPnP/1.0 Client 1.0"

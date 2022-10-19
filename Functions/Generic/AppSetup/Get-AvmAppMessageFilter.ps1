@@ -53,9 +53,9 @@ function Get-AvmAppMessageFilter {
     Begin {
         $avmBodyWebrequest = [AvmBody]::new()
 
+        $avmBodyWebrequest.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
         $avmBodyWebrequest.Action = "GetAppMessageFilter"
         $avmBodyWebrequest.InnerBody = "<s:NewAppId>{0}</s:NewAppId>" -f $AppId
-        $avmBodyWebrequest.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
 
         [xml]$avmBodyParameter = $avmBodyWebrequest.GenerateBody()
     }
@@ -71,7 +71,7 @@ function Get-AvmAppMessageFilter {
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
             XmlResponse = "GetAppMessageFilterResponse"
         }
-        
+
         Invoke-AvmAction @splatParameters
     }
 }
