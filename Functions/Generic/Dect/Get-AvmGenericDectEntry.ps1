@@ -1,21 +1,21 @@
-function Get-AvmAppMessageFilter {
+function Get-AvmGenericDectEntry {
     <#
         .SYNOPSIS
-            Get FRITZ!Box app meesage filter by id
+            Get FRITZ!Box generic dect entry
         .DESCRIPTION
-            Returns FRITZ!Box app meesage filter by id
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
+            Returns FRITZ!Box generic dect entry
         .PARAMETER RemoteAccess
             Access FRITZ!Box from the internet
+        .PARAMETER Insecure
+            Use unencrypted authentication over http instead of https
         .PARAMETER Url
             Url of FRITZ!Box
         .PARAMETER Port
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-        .PARAMETER AppId
-            Identifier of the app instance
+        .PARAMETER DectIndex
+            Argument list of action SetConfig
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -25,19 +25,16 @@ function Get-AvmAppMessageFilter {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
+            PS C:\> Get-AvmGenericDectEntry -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> Get-AvmGenericDectEntry -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> Get-AvmGenericDectEntry -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> Get-AvmGenericDectEntry -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
@@ -47,15 +44,15 @@ function Get-AvmAppMessageFilter {
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$AppId
+        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$DectIndex
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
-        $avmWebrequestBody.Action = "GetAppMessageFilter"
-        $avmWebrequestBody.InnerBody = "<s:NewAppId>{0}</s:NewAppId>" -f $AppId
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Dect:1"
+        $avmWebrequestBody.Action = "GetGenericDectEntry"
+        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $DectIndex
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
         [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
@@ -69,8 +66,8 @@ function Get-AvmAppMessageFilter {
             Credential = $Credential
             Body = $avmBodyParameter
             SoapAction = $SoapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
-            XmlResponse = "GetAppMessageFilterResponse"
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_dect"
+            XmlResponse = "GetGenericDectEntryResponse"
         }
 
         Invoke-AvmAction @splatParameters

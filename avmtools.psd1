@@ -72,7 +72,6 @@ PowerShellVersion = '5.1'
 FunctionsToExport = @(
     'Connect-AvmDevice',
     'Invoke-AvmAction',
-
     'Get-AvmAppConfig',
     'Get-AvmAppInfo',
     'Get-AvmAppRemoteInfo',
@@ -172,10 +171,14 @@ FunctionsToExport = @(
     'Get-AvmWlanStatistic',
     'Get-AvmWlanTotalAssociation',
     'Get-AvmWlanWpsInfo',
-
-    'Restart-AvmDevice'
-
-    'Get-AvmAppMessageFilter'
+    'Get-AvmAppMessageFilter',
+    'Restart-AvmDevice',
+    'Reset-AvmDevice',
+    'Register-AvmApp',
+    'Reset-AvmEvent',
+    'Set-AvmAppMessageFilter',
+    'Set-AvmAppVpn',
+    'Get-AvmGenericDectEntry'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

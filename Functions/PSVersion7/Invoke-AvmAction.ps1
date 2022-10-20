@@ -12,6 +12,8 @@ function Invoke-AvmAction {
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
+		.PARAMETER Body
+			XML for webrequest body
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -55,13 +57,19 @@ function Invoke-AvmAction {
 	Process {
 		# PowerShell 7.2
 		if ($Insecure) {
-			[xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+			#[xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+			
+			[xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication
 		} else {
-			[xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+			#[xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+
+			[xml]$avmResponse = Invoke-RestMethod @splatParameters
 		}
 	}
 
 	End {
-		return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
+		#return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
+
+		return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $avmResponse
 	}
 }
