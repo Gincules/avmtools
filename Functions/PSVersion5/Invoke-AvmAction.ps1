@@ -84,7 +84,7 @@ function Invoke-AvmAction {
     Process {
         # PowerShell 5.1
 		[System.Net.WebResponse]$webResponse = try { [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -ErrorVariable webError } catch { $_.Exception.Response }
-		
+
 		[System.UInt16]$statusCode = $webResponse.StatusCode.value__ 
 		[System.String]$statusDescription = $webResponse.StatusDescription
 
@@ -97,7 +97,7 @@ function Invoke-AvmAction {
 
 			$statusDescription += " (" + ($webError.Message -Replace("`n`n| ") -Replace "`n", " ").Trim() + ")"
 		}
-		
+
 		[System.Xml.XmlDocument]$statusXml = "<?xml version=`"1.0`"?><Envelope><Body><$XmlResponse><statusCode>$statusCode</statusCode><statusDescription>$statusDescription</statusDescription></$XmlResponse></Body></Envelope>"
 
 		[System.Array]$finalResult = @()
