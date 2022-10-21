@@ -12,6 +12,12 @@ function Connect-AvmDevice {
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
+		.PARAMETER SoapAction
+			service Type
+		.PARAMETER UrlPath
+			control URL
+		.PARAMETER XmlResponse
+			service response
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,13 +32,32 @@ function Connect-AvmDevice {
 
     Param
     (
-        [switch]$Insecure,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$UrlPath,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$SoapAction,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$XmlResponse
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+		[System.UInt16]$Port,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$UrlPath,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$SoapAction,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$XmlResponse
     )
 
     Begin {
@@ -52,15 +77,14 @@ function Connect-AvmDevice {
 
     Process {
         # PowerShell 5.1
-        [xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+        [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
     }
 
     End {
-        if ($null -eq $avmResponse)
-        {
-            return $false
-        } else {
+        if ($null -ne $avmResponse) {
             return $avmResponse.Envelope.Body.$XmlResponse
+        } else {
+            return $false
         }
     }
 }

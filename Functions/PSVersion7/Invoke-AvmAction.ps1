@@ -35,7 +35,7 @@ function Invoke-AvmAction {
 	Param
 	(
 		[Parameter()]
-		[switch]$Insecure,
+		[System.Management.Automation.SwitchParameter]$Insecure,
 
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
@@ -47,7 +47,7 @@ function Invoke-AvmAction {
 
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
-		[PSCredential]$Credential,
+		[System.Management.Automation.PSCredential]$Credential,
 
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
