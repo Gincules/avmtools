@@ -57,7 +57,7 @@ function Set-AvmDevicePersistentData {
         $avmWebrequestBody.InnerBody = "<s:NewPersistentData>{0}</s:NewPersistentData>" -f $DevicePersistentData
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -67,7 +67,7 @@ function Set-AvmDevicePersistentData {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
             XmlResponse = "SetPersistentDataResponse"
         }

@@ -63,7 +63,7 @@ function Set-AvmDeviceConfigFile {
 "@ -f $ConfigPassword.GetNetworkCredential().Password, $ConfigFileUrl
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -73,7 +73,7 @@ function Set-AvmDeviceConfigFile {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
             XmlResponse = "X_AVM-DE_SetConfigFileResponse"
         }

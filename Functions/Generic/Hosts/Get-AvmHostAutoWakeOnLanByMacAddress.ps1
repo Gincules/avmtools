@@ -1,9 +1,9 @@
-function Start-AvmDeviceConfiguration {
+function Get-AvmHostAutoWakeOnLanByMacAddress {
     <#
         .SYNOPSIS
-            Set FRITZ!Box device persistent data
+            Update FRITZ!Box homeplug device
         .DESCRIPTION
-            Set FRITZ!Box device persistent data
+            Update FRITZ!Box homeplug device
         .PARAMETER RemoteAccess
             Access FRITZ!Box from the internet
         .PARAMETER Insecure
@@ -16,7 +16,7 @@ function Start-AvmDeviceConfiguration {
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-        .PARAMETER SessionId
+        .PARAMETER a
             Argument list of action SetConfig
         .NOTES
             Author: Gincules
@@ -27,34 +27,52 @@ function Start-AvmDeviceConfiguration {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Start-AvmDeviceConfiguration -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> Get-AvmHostAutoWakeOnLanByMacAddress -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Start-AvmDeviceConfiguration -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> Get-AvmHostAutoWakeOnLanByMacAddress -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Start-AvmDeviceConfiguration -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+            PS C:\> Get-AvmHostAutoWakeOnLanByMacAddress -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Start-AvmDeviceConfiguration -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> Get-AvmHostAutoWakeOnLanByMacAddress -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+        .EXAMPLE
+            PS C:\> [PSCredential]$Credential = Get-Credential
+            PS C:\> Get-AvmHostAutoWakeOnLanByMacAddress -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
     (
+        [Parameter()]
         [switch]$Insecure = $false,
+
+        [Parameter()]
         [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$SessionId
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Url,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [int32]$Port,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$MacAddress
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:DeviceConfig:1"
-        $avmWebrequestBody.Action = "ConfigurationStarted"
-        $avmWebrequestBody.InnerBody = "<s:NewSessionID>{0}</s:NewSessionID>" -f $SessionId
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
+        $avmWebrequestBody.Action = "X_AVM-DE_GetAutoWakeOnLANByMACAddress"
+        $avmWebrequestBody.InnerBody = "<s:NewMACAddress>{0}</s:NewMACAddress>"-f $MacAddress
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
         [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
@@ -68,8 +86,8 @@ function Start-AvmDeviceConfiguration {
             Credential = $Credential
             Body = $avmBodyParameter
             SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
-            XmlResponse = "ConfigurationStartedResponse"
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+            XmlResponse = "X_AVM-DE_GetAutoWakeOnLANByMACAddressResponse"
         }
 
         Invoke-AvmAction @splatParameters

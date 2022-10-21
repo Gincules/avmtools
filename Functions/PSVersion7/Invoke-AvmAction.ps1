@@ -14,6 +14,12 @@ function Invoke-AvmAction {
             PSCredential variable
 		.PARAMETER Body
 			XML for webrequest body
+		.PARAMETER SoapAction
+			service Type
+		.PARAMETER UrlPath
+			control URL
+		.PARAMETER XmlResponse
+			service response
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -28,14 +34,36 @@ function Invoke-AvmAction {
 
 	Param
 	(
+		[Parameter()]
 		[switch]$Insecure,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$UrlPath,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$SoapAction,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][xml]$Body,
-		[Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$XmlResponse
+
+		[Parameter(Mandatory)]
+		[ValidateNotNullOrEmpty()]
+		[System.String]$Url,
+
+		[Parameter(Mandatory)]
+		[ValidateRange(0,65535)]
+		[System.UInt16]$Port,
+
+		[Parameter(Mandatory)]
+		[ValidateNotNullOrEmpty()]
+		[PSCredential]$Credential,
+
+		[Parameter(Mandatory)]
+		[ValidateNotNullOrEmpty()]
+		[System.String]$UrlPath,
+
+		[Parameter(Mandatory)]
+		[ValidateNotNullOrEmpty()]
+		[System.String]$SoapAction,
+
+		[Parameter(Mandatory)]
+		[ValidateNotNullOrEmpty()]
+		[System.Xml.XmlNode]$Body,
+
+		[Parameter(Mandatory)]
+		[ValidateNotNullOrEmpty()]
+		[System.String]$XmlResponse
 	)
 
 	Begin {
@@ -56,20 +84,31 @@ function Invoke-AvmAction {
 
 	Process {
 		# PowerShell 7.2
-		if ($Insecure) {
-			#[xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
-			
-			[xml]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication
-		} else {
-			#[xml]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+		[System.Object]$webResponse = Try { if ($Insecure) { [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -ErrorVariable webError } else { [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -ErrorVariable webError } } Catch { $_.Exception.Response }
 
-			[xml]$avmResponse = Invoke-RestMethod @splatParameters
+		if ($statusCode -eq 200) {
+			[System.String]$statusDescription = "OK"
+		} else {
+			$statusCode = $webResponse.StatusCode.value__
+			[System.String]$statusDescription = $webResponse.StatusCode
+			
+			$statusDescription += " (" + ($webError.Message -Replace("`n`n| ") -Replace "`n", " ").Trim() + ")"
+		}
+
+		[System.Xml.XmlDocument]$statusXml = "<?xml version=`"1.0`"?><Envelope><Body><$XmlResponse><statusCode>$statusCode</statusCode><statusDescription>$statusDescription</statusDescription></$XmlResponse></Body></Envelope>"
+
+		[System.Array]$finalResult = @()
+
+		$avmResponse.Envelope.Body.$XmlResponse | Select-Object | ForEach-Object {
+			$finalResult += $_
+		}
+
+		$statusXml.Envelope.Body.$XmlResponse | Select-Object | ForEach-Object {
+			$finalResult += $_
 		}
 	}
 
 	End {
-		#return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
-
-		return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $avmResponse
+		return (! ([System.String]::IsNullOrEmpty($finalResult))) ? $finalResult : $false
 	}
 }

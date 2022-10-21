@@ -1,20 +1,22 @@
-function Update-AvmDectDevice {
+function Install-AvmHostUpdate {
     <#
         .SYNOPSIS
-            Update FRITZ!Box DECT device by id
+            Update FRITZ!Box homeplug device
         .DESCRIPTION
-            Updates FRITZ!Box DECT device by id
+            Update FRITZ!Box homeplug device
         .PARAMETER RemoteAccess
             Access FRITZ!Box from the internet
         .PARAMETER Insecure
             Use unencrypted authentication over http instead of https
+        .PARAMETER RemoteAccess
+            Access FRITZ!Box from the internet
         .PARAMETER Url
             Url of FRITZ!Box
         .PARAMETER Port
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-        .PARAMETER DectId
+        .PARAMETER a
             Argument list of action SetConfig
         .NOTES
             Author: Gincules
@@ -25,34 +27,52 @@ function Update-AvmDectDevice {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> Install-AvmHostUpdate -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> Install-AvmHostUpdate -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+            PS C:\> Install-AvmHostUpdate -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> Install-AvmHostUpdate -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+        .EXAMPLE
+            PS C:\> [PSCredential]$Credential = Get-Credential
+            PS C:\> Install-AvmHostUpdate -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
     (
+        [Parameter()]
         [switch]$Insecure = $false,
+
+        [Parameter()]
         [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$DectId
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Url,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [int32]$Port,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$MacAddress
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Dect:1"
-        $avmWebrequestBody.Action = "DectDoUpdate"
-        $avmWebrequestBody.InnerBody = "<s:NewID>{0}</s:NewID>" -f $DectId
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
+        $avmWebrequestBody.Action = "X_AVM-DE_HostDoUpdate"
+        $avmWebrequestBody.InnerBody = "<s:NewMACAddress>{0}</s:NewMACAddress>" -f $MacAddress
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
         [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
@@ -66,8 +86,8 @@ function Update-AvmDectDevice {
             Credential = $Credential
             Body = $avmBodyParameter
             SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_dect"
-            XmlResponse = "DectDoUpdateResponse"
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+            XmlResponse = "X_AVM-DE_HostDoUpdateResponse"
         }
 
         Invoke-AvmAction @splatParameters

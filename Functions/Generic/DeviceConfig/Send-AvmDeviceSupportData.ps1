@@ -57,7 +57,7 @@ function Send-AvmDeviceSupportData {
         $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_SupportDataMode>{0}</s:NewX_AVM-DE_SupportDataMode>" -f $DataMode
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -67,7 +67,7 @@ function Send-AvmDeviceSupportData {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
             XmlResponse = "X_AVM-DE_SendSupportDataResponse"
         }

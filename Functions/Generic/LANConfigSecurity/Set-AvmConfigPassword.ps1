@@ -1,9 +1,11 @@
-function Get-AvmAppMessageFilter {
+function Set-AvmConfigPassword {
     <#
         .SYNOPSIS
-            Get FRITZ!Box app meesage filter by id
+            Update FRITZ!Box homeplug device
         .DESCRIPTION
-            Returns FRITZ!Box app meesage filter by id
+            Update FRITZ!Box homeplug device
+        .PARAMETER RemoteAccess
+            Access FRITZ!Box from the internet
         .PARAMETER Insecure
             Use unencrypted authentication over http instead of https
         .PARAMETER RemoteAccess
@@ -14,8 +16,8 @@ function Get-AvmAppMessageFilter {
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-        .PARAMETER AppId
-            Identifier of the app instance
+        .PARAMETER a
+            Argument list of action SetConfig
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -25,37 +27,52 @@ function Get-AvmAppMessageFilter {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
+            PS C:\> Set-AvmConfigPassword -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> Set-AvmConfigPassword -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> Set-AvmConfigPassword -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+            PS C:\> Set-AvmConfigPassword -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppMessageFilter -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> Set-AvmConfigPassword -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
     (
+        [Parameter()]
         [switch]$Insecure = $false,
+
+        [Parameter()]
         [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$AppId
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Url,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [int32]$Port,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCredential]$ConfigPassword
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
-        $avmWebrequestBody.Action = "GetAppMessageFilter"
-        $avmWebrequestBody.InnerBody = "<s:NewAppId>{0}</s:NewAppId>" -f $AppId
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANConfigSecurity:1"
+        $avmWebrequestBody.Action = "SetConfigPassword"
+        $avmWebrequestBody.InnerBody = "<s:NewPassword>{0}</s:NewPassword>" -f $ConfigPassword.GetNetworkCredential().Password
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
         [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
@@ -69,8 +86,8 @@ function Get-AvmAppMessageFilter {
             Credential = $Credential
             Body = $avmBodyParameter
             SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
-            XmlResponse = "GetAppMessageFilterResponse"
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+            XmlResponse = "SetConfigPasswordResponse"
         }
 
         Invoke-AvmAction @splatParameters

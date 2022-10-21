@@ -55,7 +55,7 @@ function Get-AvmGenericDectEntry {
         $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $DectIndex
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -65,7 +65,7 @@ function Get-AvmGenericDectEntry {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_dect"
             XmlResponse = "GetGenericDectEntryResponse"
         }

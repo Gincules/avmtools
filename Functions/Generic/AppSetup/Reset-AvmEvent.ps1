@@ -52,7 +52,7 @@ function Reset-AvmEvent {
         $avmWebrequestBody.InnerBody = "<s:NewEventId>{0}</s:NewEventId>" -f $EventId
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -62,7 +62,7 @@ function Reset-AvmEvent {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "/upnp/control/x_appsetup"
             XmlResponse = "ResetEventResponse"
         }

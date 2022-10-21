@@ -70,7 +70,7 @@ function Set-AvmAppMessageFilter {
 "@ -f $AppId, $AppType, $AppFilter
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -80,7 +80,7 @@ function Set-AvmAppMessageFilter {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
             XmlResponse = "SetAppMessageFilterResponse"
         }

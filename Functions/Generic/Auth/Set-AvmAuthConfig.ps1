@@ -55,7 +55,7 @@ function Set-AvmAuthConfig {
         $avmWebrequestBody.InnerBody = "<s:NewAction>{0}</s:NewAction>" -f $AppAction
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -65,7 +65,7 @@ function Set-AvmAuthConfig {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_auth"
             XmlResponse = "SetConfigResponse"
         }

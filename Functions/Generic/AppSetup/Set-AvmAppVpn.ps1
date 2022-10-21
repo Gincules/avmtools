@@ -68,7 +68,7 @@ function Set-AvmAppVpn {
 "@ -f $AppId, $IPSecIdentifier, $IPSecPreSharedKey, $IPSecXauthCredential.GetNetworkCredential().UserName, $IPSecXauthCredential.GetNetworkCredential().Password
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -78,7 +78,7 @@ function Set-AvmAppVpn {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "/upnp/control/x_appsetup"
             XmlResponse = "SetAppVPNResponse"
         }

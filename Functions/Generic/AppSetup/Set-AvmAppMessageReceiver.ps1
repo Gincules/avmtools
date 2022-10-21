@@ -75,7 +75,7 @@ function Set-AvmAppMessageReceiver {
 "@ -f $AppId, $CryptAlgos, $AppAvmAddress, $AppAvmHash
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -85,7 +85,7 @@ function Set-AvmAppMessageReceiver {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "/upnp/control/x_appsetup"
             XmlResponse = "SetAppMessageReceiverResponse"
         }

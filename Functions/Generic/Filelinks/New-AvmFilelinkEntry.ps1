@@ -1,20 +1,22 @@
-function Update-AvmDectDevice {
+function New-AvmFilelinkEntry {
     <#
         .SYNOPSIS
-            Update FRITZ!Box DECT device by id
+            Get FRITZ!Box specific filelink entry
         .DESCRIPTION
-            Updates FRITZ!Box DECT device by id
+            Get FRITZ!Box specific filelink entry
         .PARAMETER RemoteAccess
             Access FRITZ!Box from the internet
         .PARAMETER Insecure
             Use unencrypted authentication over http instead of https
+        .PARAMETER RemoteAccess
+            Access FRITZ!Box from the internet
         .PARAMETER Url
             Url of FRITZ!Box
         .PARAMETER Port
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-        .PARAMETER DectId
+        .PARAMETER a
             Argument list of action SetConfig
         .NOTES
             Author: Gincules
@@ -25,16 +27,19 @@ function Update-AvmDectDevice {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> New-AvmFilelinkEntry -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> New-AvmFilelinkEntry -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+            PS C:\> New-AvmFilelinkEntry -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Update-AvmDectDevice -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> New-AvmFilelinkEntry -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+        .EXAMPLE
+            PS C:\> [PSCredential]$Credential = Get-Credential
+            PS C:\> New-AvmFilelinkEntry -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
@@ -44,15 +49,21 @@ function Update-AvmDectDevice {
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
         [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$DectId
+        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$FilePath,
+        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$FileAccessLimit,
+        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$FileExpire
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Dect:1"
-        $avmWebrequestBody.Action = "DectDoUpdate"
-        $avmWebrequestBody.InnerBody = "<s:NewID>{0}</s:NewID>" -f $DectId
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Filelinks:1"
+        $avmWebrequestBody.Action = "NewFilelinkEntry"
+        $avmWebrequestBody.InnerBody = @"
+<s:NewPath>{0}</s:NewPath>
+<s:NewAccessCountLimit>{0}</s:NewAccessCountLimit>
+<s:NewExpire>{0}</s:NewExpire>
+"@ -f $FilePath, $FileAccessLimit, $FileExpire
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
         [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
@@ -66,8 +77,8 @@ function Update-AvmDectDevice {
             Credential = $Credential
             Body = $avmBodyParameter
             SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_dect"
-            XmlResponse = "DectDoUpdateResponse"
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_filelinks"
+            XmlResponse = "NewFilelinkEntryResponse"
         }
 
         Invoke-AvmAction @splatParameters

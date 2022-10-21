@@ -87,7 +87,7 @@ function Register-AvmApp {
 "@ -f $AppId, $AppDisplayName, $AppDeviceMAC, $AppCredential.GetNetworkCredential().UserName, $AppCredential.GetNetworkCredential().Password, $AppRight, $NasRight, $PhoneRight, $HomeautoRight, $AppInternetRights
 
         [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -97,7 +97,7 @@ function Register-AvmApp {
             Port = $Port
             Credential = $Credential
             Body = $avmBodyParameter
-            SoapAction = $SoapAction
+            SoapAction = $soapAction
             UrlPath = "/upnp/control/x_appsetup"
             XmlResponse = "RegisterAppResponse"
         }
