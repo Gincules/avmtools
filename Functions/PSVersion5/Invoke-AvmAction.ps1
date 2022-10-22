@@ -12,14 +12,14 @@ function Invoke-AvmAction {
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-		.PARAMETER Body
-			XML for webrequest body
-		.PARAMETER SoapAction
-			service Type
-		.PARAMETER UrlPath
-			control URL
-		.PARAMETER XmlResponse
-			service response
+        .PARAMETER Body
+            XML for webrequest body
+        .PARAMETER SoapAction
+            service Type
+        .PARAMETER UrlPath
+            control URL
+        .PARAMETER XmlResponse
+            service response
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools

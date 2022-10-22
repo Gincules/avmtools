@@ -12,12 +12,12 @@ function Connect-AvmDevice {
             Port of FRITZ!Box
         .PARAMETER Credential
             PSCredential variable
-		.PARAMETER SoapAction
-			service Type
-		.PARAMETER UrlPath
-			control URL
-		.PARAMETER XmlResponse
-			service response
+        .PARAMETER SoapAction
+            service Type
+        .PARAMETER UrlPath
+            control URL
+        .PARAMETER XmlResponse
+            service response
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -41,7 +41,7 @@ function Connect-AvmDevice {
 
         [Parameter(Mandatory)]
         [ValidateRange(0,65535)]
-		[System.UInt16]$Port,
+        [System.UInt16]$Port,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
