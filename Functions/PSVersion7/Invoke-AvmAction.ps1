@@ -34,42 +34,42 @@ function Invoke-AvmAction {
 
 	Param
 	(
-		[Alias("I","i")]
+		[Alias("I")]
 		[Parameter()]
 		[System.Management.Automation.SwitchParameter]$Insecure,
 
-		[Alias("U","u")]
+		[Alias("U")]
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]$Url,
 
-		[Alias("P","p")]
+		[Alias("P")]
 		[Parameter(Mandatory)]
 		[ValidateRange(0,65535)]
 		[System.UInt16]$Port,
 
-		[Alias("C","c")]
+		[Alias("C")]
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
 		[System.Management.Automation.PSCredential]$Credential,
 
-		# since U|u for url and P|p for path, S|s for segemet or subdirectory is already taken - D|d like directory
-		[Alias("D","d")]
+		# since U for url and P for path, S for segemet or subdirectory is already taken - D like directory
+		[Alias("D")]
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]$UrlPath,
 
-		[Alias("S","s")]
+		[Alias("S")]
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]$SoapAction,
 
-		[Alias("B","b")]
+		[Alias("B")]
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
 		[System.Xml.XmlNode]$Body,
 
-		[Alias("X","x")]
+		[Alias("X")]
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]$XmlResponse
@@ -109,7 +109,7 @@ function Invoke-AvmAction {
 		}
 
 		# use XML for consistency
-		[System.Xml.XmlDocument]$statusXml = "<?xml version=`"1.0`"?><Envelope><Body><$XmlResponse><statusCode>$statusCode</statusCode><statusDescription>$statusDescription</statusDescription></$XmlResponse></Body></Envelope>"
+		[System.Xml.XmlDocument]$statusXml = '<?xml version="1.0"?><Envelope><Body><{0}><statusCode>{1}</statusCode><statusDescription>{2}</statusDescription></{0}></Body></Envelope>' -f $XmlResponse, $statusCode, $statusDescription
 
 		[System.Collections.ArrayList]$finalResult = @()
 
