@@ -59,7 +59,7 @@ function Invoke-AvmAction {
 
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]
-		[System.Xml.XmlNode]$Body,
+		[System.Xml.XmlDocument]$Body,
 
 		[Parameter(Mandatory)]
 		[ValidateNotNullOrEmpty()]

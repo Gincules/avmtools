@@ -58,12 +58,10 @@ function Set-AvmHomeautoDeviceName {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Homeauto:1"
         $avmWebrequestBody.Action = "SetDeviceName"
-        $avmWebrequestBody.InnerBody = @"
-<s:NewAIN>{0}</s:NewAIN>
-<s:NewDeviceName>{1}</s:NewDeviceName>
-"@-f $Ain, $DeviceName
+        $avmWebrequestBody.InnerBody = "<s:NewAIN>{0}</s:NewAIN><s:NewDeviceName>{1}</s:NewDeviceName>" -f $Ain, $DeviceName
 
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
+        [System.Xml.XmlDocument]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
+
         [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 

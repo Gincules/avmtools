@@ -95,7 +95,7 @@ function Invoke-AvmAction {
 		# PowerShell 7.2
 		# call TR-064 api and catch error
 		[System.Object]$webResponse = Try { if ($Insecure) { [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -ErrorVariable webError } else { [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -ErrorVariable webError }} Catch { $_.Exception.Response }
-		
+
 		# assign status of web request
 		if ($statusCode -eq 200) {
 			[System.String]$statusDescription = "OK"

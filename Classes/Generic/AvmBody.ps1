@@ -4,7 +4,7 @@ class AvmBody {
     [System.String]$SoapAction
     [System.String]$UrlPath
 
-    [System.Xml.XmlNode]GenerateBody() {
+    [System.Xml.XmlDocument]GenerateBody() {
         return '<?xml version="1.0" encoding="utf-8"?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><u:{1} xmlns:u="{0}">{2}</u:{1}></s:Body></s:Envelope>' -f $this.SoapAction, $this.Action, $this.InnerBody
     }
 
