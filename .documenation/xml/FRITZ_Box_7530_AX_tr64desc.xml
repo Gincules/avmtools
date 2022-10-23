@@ -6,21 +6,21 @@
 		<minor>0</minor>
 	</specVersion>
 	<systemVersion>
-		<HW>220</HW>
-		<Major>148</Major>
+		<HW>256</HW>
+		<Major>256</Major>
 		<Minor>7</Minor>
 		<Patch>29</Patch>
-		<Buildnumber>92219</Buildnumber>
-		<Display>148.07.29</Display>
+		<Buildnumber>92446</Buildnumber>
+		<Display>256.07.29</Display>
 	</systemVersion>
 	<device>
 		<deviceType>urn:dslforum-org:device:InternetGatewayDevice:1</deviceType>
-		<friendlyName>FRITZ!Box 6590 Cable</friendlyName>
+		<friendlyName>FRITZ!Box 7530 AX</friendlyName>
 		<manufacturer>AVM</manufacturer>
 		<manufacturerURL>www.avm.de</manufacturerURL>
-		<modelDescription>FRITZ!Box 6590 Cable</modelDescription>
-		<modelName>FRITZ!Box 6590 Cable</modelName>
-		<modelNumber> - avm</modelNumber>
+		<modelDescription>FRITZ!Box 7530 AX</modelDescription>
+		<modelName>FRITZ!Box 7530 AX</modelName>
+		<modelNumber> - avme</modelNumber>
 		<modelURL>www.avm.de</modelURL>
 		<UDN>uuid:12345678-abcd-1a2b-1a2b-123ABC123ABC</UDN>
 		<iconList>
@@ -198,12 +198,12 @@
 		<deviceList>
 			<device>
 				<deviceType>urn:dslforum-org:device:LANDevice:1</deviceType>
-				<friendlyName>LANDevice - FRITZ!Box 6590 Cable</friendlyName>
+				<friendlyName>LANDevice - FRITZ!Box 7530 AX</friendlyName>
 				<manufacturer>AVM</manufacturer>
 				<manufacturerURL>www.avm.de</manufacturerURL>
-				<modelDescription>LANDevice - FRITZ!Box 6590 Cable</modelDescription>
-				<modelName>LANDevice - FRITZ!Box 6590 Cable</modelName>
-				<modelNumber> - avm</modelNumber>
+				<modelDescription>LANDevice - FRITZ!Box 7530 AX</modelDescription>
+				<modelName>LANDevice - FRITZ!Box 7530 AX</modelName>
+				<modelNumber> - avme</modelNumber>
 				<modelURL>www.avm.de</modelURL>
 				<UDN>uuid:12345678-abcd-1a2b-1a2b-123ABC123ABC</UDN>
 				<UPC>AVM TR-064</UPC>
@@ -222,7 +222,7 @@
 						<eventSubURL>/upnp/control/wlanconfig2</eventSubURL>
 						<SCPDURL>/wlanconfigSCPD.xml</SCPDURL>
 					</service>
-					<!--  2  -->
+					<!-- 2 -->
 					<service>
 						<serviceType>urn:dslforum-org:service:WLANConfiguration:3</serviceType>
 						<serviceId>urn:WLANConfiguration-com:serviceId:WLANConfiguration3</serviceId>
@@ -255,12 +255,12 @@
 			</device>
 			<device>
 				<deviceType>urn:dslforum-org:device:WANDevice:1</deviceType>
-				<friendlyName>WANDevice - FRITZ!Box 6590 Cable</friendlyName>
+				<friendlyName>WANDevice - FRITZ!Box 7530 AX</friendlyName>
 				<manufacturer>AVM</manufacturer>
 				<manufacturerURL>www.avm.de</manufacturerURL>
-				<modelDescription>WANDevice - FRITZ!Box 6590 Cable</modelDescription>
-				<modelName>WANDevice - FRITZ!Box 6590 Cable</modelName>
-				<modelNumber> - avm</modelNumber>
+				<modelDescription>WANDevice - FRITZ!Box 7530 AX</modelDescription>
+				<modelName>WANDevice - FRITZ!Box 7530 AX</modelName>
+				<modelNumber> - avme</modelNumber>
 				<modelURL>www.avm.de</modelURL>
 				<UDN>uuid:12345678-abcd-1a2b-1a2b-123ABC123ABC</UDN>
 				<UPC>AVM TR-064</UPC>
@@ -283,12 +283,12 @@
 				<deviceList>
 					<device>
 						<deviceType>urn:dslforum-org:device:WANConnectionDevice:1</deviceType>
-						<friendlyName>WANConnectionDevice - FRITZ!Box 6590 Cable</friendlyName>
+						<friendlyName>WANConnectionDevice - FRITZ!Box 7530 AX</friendlyName>
 						<manufacturer>AVM</manufacturer>
 						<manufacturerURL>www.avm.de</manufacturerURL>
-						<modelDescription>WANConnectionDevice - FRITZ!Box 6590 Cable</modelDescription>
-						<modelName>WANConnectionDevice - FRITZ!Box 6590 Cable</modelName>
-						<modelNumber> - avm</modelNumber>
+						<modelDescription>WANConnectionDevice - FRITZ!Box 7530 AX</modelDescription>
+						<modelName>WANConnectionDevice - FRITZ!Box 7530 AX</modelName>
+						<modelNumber> - avme</modelNumber>
 						<modelURL>www.avm.de</modelURL>
 						<UDN>uuid:12345678-abcd-1a2b-1a2b-123ABC123ABC</UDN>
 						<UPC>AVM TR-064</UPC>

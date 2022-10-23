@@ -1,4 +1,4 @@
-function Get-AvmOnTelDectHandsetInfo {
+function Enable-AvmOnTelByIndex {
     <#
         .SYNOPSIS
             Update FRITZ!Box homeplug device
@@ -27,19 +27,19 @@ function Get-AvmOnTelDectHandsetInfo {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelDectHandsetInfo -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
+            PS C:\> Enable-AvmOnTelByIndex -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelDectHandsetInfo -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> Enable-AvmOnTelByIndex -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelDectHandsetInfo -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> Enable-AvmOnTelByIndex -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelDectHandsetInfo -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+            PS C:\> Enable-AvmOnTelByIndex -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelDectHandsetInfo -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> Enable-AvmOnTelByIndex -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
@@ -63,7 +63,10 @@ function Get-AvmOnTelDectHandsetInfo {
         [PSCredential]$Credential,
 
         [Parameter()]
-        [string]$NewDectID
+        [string]$NewIndex,
+
+        [Parameter()]
+        [string]$NewEnable
     )
 
     Begin {
@@ -71,8 +74,11 @@ function Get-AvmOnTelDectHandsetInfo {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_OnTel:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_contact"
-        $avmWebrequestBody.Action = "GetDECTHandsetInfo"
-        $avmWebrequestBody.InnerBody = "<s:NewDectID>{0}</s:NewDectID>" -f $NewDectID
+        $avmWebrequestBody.Action = "SetEnableByIndex"
+        $avmWebrequestBody.InnerBody = @"
+<s:NewIndex>{0}</s:NewIndex>
+<s:NewEnable>{1}</s:NewEnable>
+"@ -f $NewIndex, $NewEnable
     }
 
     Process {
