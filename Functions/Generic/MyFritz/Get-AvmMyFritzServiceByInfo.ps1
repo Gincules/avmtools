@@ -1,4 +1,4 @@
-function Enable-AvmLanDhcpServer {
+function Get-AvmMyFritzServiceByInfo {
     <#
         .SYNOPSIS
             Update FRITZ!Box homeplug device
@@ -27,19 +27,19 @@ function Enable-AvmLanDhcpServer {
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Enable-AvmLanDhcpServer -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
+            PS C:\> Get-AvmMyFritzServiceByInfo -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Enable-AvmLanDhcpServer -Url "https://fritz.box" -Port 49443 -Credential $Credential
+            PS C:\> Get-AvmMyFritzServiceByInfo -Url "https://fritz.box" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Enable-AvmLanDhcpServer -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
+            PS C:\> Get-AvmMyFritzServiceByInfo -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Enable-AvmLanDhcpServer -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
+            PS C:\> Get-AvmMyFritzServiceByInfo -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
         .EXAMPLE
             PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Enable-AvmLanDhcpServer -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            PS C:\> Get-AvmMyFritzServiceByInfo -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
     #>
 
     Param
@@ -63,18 +63,16 @@ function Enable-AvmLanDhcpServer {
         [PSCredential]$Credential,
 
         [Parameter()]
-        [System.Byte][System.Switch]$Enable = $false
+        [int32]$Index
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANHostConfigManagement:1"
-        $avmWebrequestBody.Action = "SetDHCPServerEnable"
-        $avmWebrequestBody.InnerBody = "<s:NewDHCPServerEnable>{0}</s:NewDHCPServerEnable>" -f $Enable
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_MyFritz:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_myfritz"
+        $avmWebrequestBody.Action = "GetServiceByIndex"
+        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $Index
     }
 
     Process {
@@ -83,10 +81,10 @@ function Enable-AvmLanDhcpServer {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
-            XmlResponse = "SetDHCPServerEnableResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters
