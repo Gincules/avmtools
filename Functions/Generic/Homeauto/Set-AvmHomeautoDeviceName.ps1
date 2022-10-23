@@ -59,10 +59,6 @@ function Set-AvmHomeautoDeviceName {
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Homeauto:1"
         $avmWebrequestBody.Action = "SetDeviceName"
         $avmWebrequestBody.InnerBody = "<s:NewAIN>{0}</s:NewAIN><s:NewDeviceName>{1}</s:NewDeviceName>" -f $Ain, $DeviceName
-
-        [System.Xml.XmlDocument]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -71,8 +67,8 @@ function Set-AvmHomeautoDeviceName {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
             UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_homeauto"
             XmlResponse = "SetDeviceNameResponse"
         }
