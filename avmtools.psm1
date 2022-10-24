@@ -3,6 +3,11 @@ ForEach ($object in (Get-ChildItem -Path "$PSScriptRoot\Classes\Generic" -Recurs
     . $object.FullName
 }
 
+# source required enums for all PowerShell versions
+ForEach ($object in (Get-ChildItem -Path "$PSScriptRoot\Enums\Generic" -Recurse -Filter *.ps1)) {
+    . $object.FullName
+}
+
 # since Invoke-RestMethod has different parameters between Windows PowerShell 5.1 and PowerShell Core 7.2, relevant functions being sourced
 if ($PSVersionTable.PSVersion.Major -gt 5) {
     <#
