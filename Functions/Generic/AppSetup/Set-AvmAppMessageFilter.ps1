@@ -17,20 +17,25 @@ function Set-AvmAppMessageFilter {
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$RemoteAccess= $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [System.String]$Url,
 
+        [Alias("p")]
         [Parameter(Mandatory)]
         [ValidateRange(0,65535)]
         [System.UInt16]$Port,
 
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,

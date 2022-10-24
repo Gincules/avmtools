@@ -17,17 +17,21 @@ function Register-AvmApp {
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [System.Management.Automation.SwitchParameter]$Insecure,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [System.String]$Url,
 
+        [Alias("p")]
         [Parameter(Mandatory)]
         [ValidateRange(0,65535)]
         [System.UInt16]$Port,
 
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
