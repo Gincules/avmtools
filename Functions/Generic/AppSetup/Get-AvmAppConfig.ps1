@@ -1,19 +1,9 @@
 function Get-AvmAppConfig {
     <#
         .SYNOPSIS
-            Get FRITZ!Box app config
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
         .DESCRIPTION
-            Returns FRITZ!Box app config
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -22,26 +12,16 @@ function Get-AvmAppConfig {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppConfig -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppConfig -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppConfig -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppConfig -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmAppConfig -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
     #>
 
     Param
     (
         [Parameter()]
-        [System.Management.Automation.SwitchParameter]$Insecure,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
+
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$RemoteAccess= $false,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]

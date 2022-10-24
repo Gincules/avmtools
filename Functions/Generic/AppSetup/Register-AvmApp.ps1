@@ -1,35 +1,9 @@
 function Register-AvmApp {
     <#
         .SYNOPSIS
-            Get FRITZ!Box app meesage filter by id
+            Wiki: https://github.com/Gincules/avmtools/wiki/Register-AvmApp
         .DESCRIPTION
-            Returns FRITZ!Box app meesage filter by id
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER AppId
-            Identifier of the app instance
-        .PARAMETER AppDisplayName
-            displayname of app
-        .PARAMETER AppDeviceMAC
-            MAC-Address of app
-        .PARAMETER AppCredential
-            PSCredential of app id user
-        .PARAMETER AppRight
-            Right of app. valid values are NO, RO or RW
-        .PARAMETER NasRight
-            NAS rights of app. valid values are NO, RO or RW
-        .PARAMETER PhoneRight
-            VOICE rights of app. valid values are NO, RO or RW
-        .PARAMETER HomeautoRight
-            HOMEAUTO rights of app. valid values are NO, RO or RW
-        .PARAMETER AppInternetRights
-            Internet Rights of app. valid values are true or false
+            Wiki: https://github.com/Gincules/avmtools/wiki/Register-AvmApp
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -38,40 +12,67 @@ function Register-AvmApp {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Register-AvmApp -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Register-AvmApp -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Register-AvmApp -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Register-AvmApp -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Register-AvmApp
     #>
 
     Param
     (
-        [switch]$Insecure = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$AppId,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$AppDisplayName,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$AppDeviceMAC,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$AppCredential,
-        [Parameter(Mandatory=$true)][ValidateSet("NO","RO","RW","UNDEFINED")][string]$AppRight,
-        [Parameter(Mandatory=$true)][ValidateSet("NO","RO","RW","UNDEFINED")][string]$NasRight,
-        [Parameter(Mandatory=$true)][ValidateSet("NO","RO","RW","UNDEFINED")][string]$PhoneRight,
-        [Parameter(Mandatory=$true)][ValidateSet("NO","RO","RW","UNDEFINED")][string]$HomeautoRight,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int][boolean]$AppInternetRights
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewAppId,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewAppDisplayName,
+
+        [Parameter()]
+        [System.String]$NewAppDeviceMAC,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [PSCredential]$NewAppCredential,
+
+        [Parameter(Mandatory)]
+        [ValidateSet("NO","RO","RW","UNDEFINED",0,2,4)]
+        [RightEnum]$NewAppRight,
+
+        [Parameter(Mandatory)]
+        [ValidateSet("NO","RO","RW","UNDEFINED",0,2,4)]
+        [RightEnum]$NewNasRight,
+
+        [Parameter(Mandatory)]
+        [ValidateSet("NO","RO","RW","UNDEFINED",0,2,4)]
+        [RightEnum]$NewPhoneRight,
+
+        [Parameter(Mandatory)]
+        [ValidateSet("NO","RO","RW","UNDEFINED",0,2,4)]
+        [RightEnum]$NewHomeautoRight,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.SByte][System.Boolean]$NewAppInternetRights
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
+        $avmWebrequestBody.UrlPath = "/upnp/control/x_appsetup"
         $avmWebrequestBody.Action = "RegisterApp"
         $avmWebrequestBody.InnerBody = @"
 <s:NewAppId>{0}</s:NewAppId>
@@ -84,10 +85,7 @@ function Register-AvmApp {
 <s:NewPhoneRight>{7}</s:NewPhoneRight>
 <s:NewHomeautoRight>{8}</s:NewHomeautoRight>
 <s:NewAppInternetRights>{9}</s:NewAppInternetRights>
-"@ -f $AppId, $AppDisplayName, $AppDeviceMAC, $AppCredential.GetNetworkCredential().UserName, $AppCredential.GetNetworkCredential().Password, $AppRight, $NasRight, $PhoneRight, $HomeautoRight, $AppInternetRights
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+"@ -f $NewAppId, $NewAppDisplayName, $NewAppDeviceMAC, $NewAppCredential.GetNetworkCredential().UserName, $NewAppCredential.GetNetworkCredential().Password, $NewAppRight, $NewNasRight, $NewPhoneRight, $NewHomeautoRight, $NewAppInternetRights
     }
 
     Process {
@@ -96,10 +94,10 @@ function Register-AvmApp {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "/upnp/control/x_appsetup"
-            XmlResponse = "RegisterAppResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters
