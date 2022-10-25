@@ -1,23 +1,9 @@
 function Get-AvmMyFritzServiceByInfo {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByInfo
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,44 +12,37 @@ function Get-AvmMyFritzServiceByInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmMyFritzServiceByInfo -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmMyFritzServiceByInfo -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmMyFritzServiceByInfo -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmMyFritzServiceByInfo -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmMyFritzServiceByInfo -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByInfo
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
+        [System.String]$Url,
 
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [int32]$Port,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [int32]$Index
+        [ValidateRange(0,4294967295)]
+        [System.UInt32]$NewIndex
     )
 
     Begin {
@@ -72,7 +51,7 @@ function Get-AvmMyFritzServiceByInfo {
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_MyFritz:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_myfritz"
         $avmWebrequestBody.Action = "GetServiceByIndex"
-        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $Index
+        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
     }
 
     Process {

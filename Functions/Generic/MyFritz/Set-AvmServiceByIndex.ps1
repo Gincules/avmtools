@@ -1,23 +1,9 @@
 function Set-AvmServiceByIndex {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmServiceByIndex
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmServiceByIndex
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,77 +12,72 @@ function Set-AvmServiceByIndex {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmServiceByIndex -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmServiceByIndex -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmServiceByIndex -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmServiceByIndex -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmServiceByIndex -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmServiceByIndex
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
+        [System.String]$Url,
 
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [int32]$Port,
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
+        [ValidateRange(0,4294967295)]
+        [System.UInt32]$NewIndex,
+
+        [Parameter(Mandatory)]
+        [System.Byte][System.Boolean]$NewEnabled,
+
+        [Parameter(Mandatory)]
+        [System.String]$NewName,
+
+        [Parameter(Mandatory)]
+        [System.String]$NewScheme,
+
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$NewPort,
+
+        [Parameter(Mandatory)]
+        [System.String]$NewURLPath,
 
         [Parameter()]
-        [string]$Index,
+        [ValidateSet("","servicetype_app_camera")]
+        [System.String]$NewType,
 
         [Parameter()]
-        [string]$Enabled,
+        [System.Net.IPAddress]$NewIPv4Address,
 
         [Parameter()]
-        [string]$Name,
+        [System.Net.IPAddress]$NewIPv6Address,
 
         [Parameter()]
-        [string]$Scheme,
+        [System.Net.IPAddress]$NewIPv6InterfaceID,
 
         [Parameter()]
-        [string]$NewPort,
+        [System.String]$NewMACAddress,
 
         [Parameter()]
-        [string]$Path,
-
-        [Parameter()]
-        [string]$Type,
-
-        [Parameter()]
-        [string]$Ipv4,
-
-        [Parameter()]
-        [string]$Ipv6,
-
-        [Parameter()]
-        [string]$Ipv6Interface,
-
-        [Parameter()]
-        [string]$MacAddress,
-
-        [Parameter()]
-        [string]$HostName
+        [System.String]$NewHostName
     )
 
     Begin {
@@ -118,7 +99,7 @@ function Set-AvmServiceByIndex {
 <s:NewIPv6InterfaceID>{9}</s:NewIPv6InterfaceID>
 <s:NewMACAddress>{10}</s:NewMACAddress>
 <s:NewHostName>{11}</s:NewHostName>
-"@ -f $NewIndex, $NewEnabled, $NewName, $NewScheme, $NewPort, $NewURLPath, $NewType, $NewType, $NewIPv4Address, $NewIPv6Address, $NewIPv6InterfaceID, $NewMACAddress, $NewHostName
+"@ -f $NewIndex, $NewEnabled, $NewName, $NewScheme, $NewPort, $NewURLPath, $NewType, $NewIPv4Address, $NewIPv6Address, $NewIPv6InterfaceID, $NewMACAddress, $NewHostName
     }
 
     Process {

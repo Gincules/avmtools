@@ -1,23 +1,9 @@
 function Set-AvmRouterIp {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmRouterIp
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmRouterIp
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,56 +12,46 @@ function Set-AvmRouterIp {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmRouterIp -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmRouterIp -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmRouterIp -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmRouterIp -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmRouterIp -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmRouterIp
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("u")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [int32]$Port,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$IpAddress
+        [System.String]$NewIPRouters
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANHostConfigManagement:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
         $avmWebrequestBody.Action = "SetIPRouter"
-        $avmWebrequestBody.InnerBody = "<s:NewIPRouters>{0}</s:NewIPRouters>" -f $IpAddress
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+        $avmWebrequestBody.InnerBody = "<s:NewIPRouters>{0}</s:NewIPRouters>" -f $NewIPRouters
     }
 
     Process {
@@ -84,10 +60,10 @@ function Set-AvmRouterIp {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
-            XmlResponse = "SetIPRouterResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

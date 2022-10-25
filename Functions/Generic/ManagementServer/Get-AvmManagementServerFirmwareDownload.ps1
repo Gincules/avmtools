@@ -1,9 +1,9 @@
-function Get-AvmLanEthernetInterfaceConfigInfo {
+function Get-AvmManagementServerFirmwareDownload {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEthernetInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmManagementServerFirmwareDownload
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEthernetInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmManagementServerFirmwareDownload
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLanEthernetInterfaceConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEthernetInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmManagementServerFirmwareDownload
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-AvmLanEthernetInterfaceConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:LANEthernetInterfaceConfig:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanethernetifcfg"
-        XmlResponse = "GetInfoResponse"
+        SoapAction = "urn:dslforum-org:service:ManagementServer:1#X_AVM-DE_GetTR069FirmwareDownloadEnabled"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
+        XmlResponse = "X_AVM-DE_GetTR069FirmwareDownloadEnabledResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

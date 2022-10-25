@@ -1,23 +1,9 @@
 function Set-AvmManagementUpgrade {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagementUpgrade
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagementUpgrade
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,56 +12,45 @@ function Set-AvmManagementUpgrade {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmManagementUpgrade -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmManagementUpgrade -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmManagementUpgrade -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmManagementUpgrade -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmManagementUpgrade -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagementUpgrade
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
+        [System.String]$Url,
 
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [int32]$Port,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [string]$UpgradesManaged
+        [string]$NewUpgradesManaged
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:ManagementServer:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
         $avmWebrequestBody.Action = "SetUpgradeManagement"
-        $avmWebrequestBody.InnerBody = "<s:NewUpgradesManaged>{0}</s:NewUpgradesManaged>" -f $UpgradesManaged
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
-        [string]$XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+        $avmWebrequestBody.InnerBody = "<s:NewUpgradesManaged>{0}</s:NewUpgradesManaged>" -f $NewUpgradesManaged
     }
 
     Process {
@@ -84,10 +59,10 @@ function Set-AvmManagementUpgrade {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-            XmlResponse = $XmlResponse
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

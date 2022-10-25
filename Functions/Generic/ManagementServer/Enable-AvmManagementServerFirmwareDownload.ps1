@@ -1,9 +1,9 @@
-function Set-AvmLanEthernetInterfaceConfigEnable {
+function Enable-AvmManagementServerFirmwareDownload {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLanEthernetInterfaceConfigEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagementServerFirmwareDownload
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLanEthernetInterfaceConfigEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagementServerFirmwareDownload
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmLanEthernetInterfaceConfigEnable {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLanEthernetInterfaceConfigEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagementServerFirmwareDownload
     #>
 
     Param
@@ -40,18 +40,17 @@ function Set-AvmLanEthernetInterfaceConfigEnable {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.Byte][System.Boolean]$NewEnable
+        [Parameter()]
+        [System.Byte][System.Boolean]$NewTR069FirmwareDownloadEnabled
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANEthernetInterfaceConfig:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "SetEnable"
-        $avmWebrequestBody.InnerBody = "<s:NewEnable>{0}</s:NewEnable>" -f $NewEnable
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:ManagementServer:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
+        $avmWebrequestBody.Action = "X_AVM-DE_SetTR069FirmwareDownloadEnabled"
+        $avmWebrequestBody.InnerBody = "<s:NewTR069FirmwareDownloadEnabled>{0}</s:NewTR069FirmwareDownloadEnabled>" -f $NewTR069FirmwareDownloadEnabled
     }
 
     Process {

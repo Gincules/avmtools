@@ -1,23 +1,9 @@
 function Add-AvmLayer3ForwardingEntry {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Add-AvmLayer3ForwardingEntry
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Add-AvmLayer3ForwardingEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,85 +12,75 @@ function Add-AvmLayer3ForwardingEntry {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Add-AvmLayer3ForwardingEntry -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Add-AvmLayer3ForwardingEntry -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Add-AvmLayer3ForwardingEntry -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Add-AvmLayer3ForwardingEntry -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Add-AvmLayer3ForwardingEntry -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Add-AvmLayer3ForwardingEntry
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
+        [System.String]$Url,
 
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [int32]$Port,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.String]$Type,
+        [System.String]$NewType,
 
         [Parameter()]
-        [System.String]$DestIPAddress,
+        [System.Net.IPAddress]$NewDestIPAddress,
 
         [Parameter()]
-        [System.String]$DestSubnetMask,
+        [System.Net.IPAddress]$NewDestSubnetMask,
 
         [Parameter()]
-        [System.String]$SourceIPAddress,
+        [System.Net.IPAddress]$NewSourceIPAddress,
         
         [Parameter()]
-        [System.String]$SourceSubnetMask,
+        [System.Net.IPAddress]$NewSourceSubnetMask,
 
         [Parameter()]
-        [System.String]$GatewayIPAddress,
+        [System.Net.IPAddress]$NewGatewayIPAddress,
 
         [Parameter()]
-        [System.String]$Interface,
+        [System.String]$NewInterface,
 
         [Parameter()]
-        [System.String]$ForwardingMetric
+        [System.String]$NewForwardingMetric
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
         $avmWebrequestBody.Action = "AddForwardingEntry"
         $avmWebrequestBody.InnerBody = @"
-<s:NewDefaultConnectionService>{0}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{1}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{2}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{3}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{4}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{5}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{6}</s:NewDefaultConnectionService>
-<s:NewDefaultConnectionService>{7}</s:NewDefaultConnectionService>
-"@ -f $Type, $DestIPAddress, $DestSubnetMask, $SourceIPAddress, $SourceSubnetMask, $GatewayIPAddress, $Interface, $ForwardingMetric
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+<s:NewType>{0}</s:NewType>
+<s:NewDestIPAddress>{1}</s:NewDestIPAddress>
+<s:NewDestSubnetMask>{2}</s:NewDestSubnetMask>
+<s:NewSourceIPAddress>{3}</s:NewSourceIPAddress>
+<s:NewSourceSubnetMask>{4}</s:NewSourceSubnetMask>
+<s:NewGatewayIPAddress>{5}</s:NewGatewayIPAddress>
+<s:NewInterface>{6}</s:NewInterface>
+<s:NewForwardingMetric>{7}</s:NewForwardingMetric>
+"@ -f $NewType, $NewDestIPAddress, $NewDestSubnetMask, $NewSourceIPAddress, $NewSourceSubnetMask, $NewGatewayIPAddress, $NewInterface, $NewForwardingMetric
     }
 
     Process {
@@ -113,10 +89,10 @@ function Add-AvmLayer3ForwardingEntry {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
-            XmlResponse = "AddForwardingEntryResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

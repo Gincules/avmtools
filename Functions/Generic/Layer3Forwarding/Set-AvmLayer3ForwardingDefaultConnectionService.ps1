@@ -1,23 +1,9 @@
 function Set-AvmLayer3ForwardingDefaultConnectionService {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingDefaultConnectionService
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingDefaultConnectionService
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,55 +12,45 @@ function Set-AvmLayer3ForwardingDefaultConnectionService {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmLayer3ForwardingDefaultConnectionService -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmLayer3ForwardingDefaultConnectionService -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmLayer3ForwardingDefaultConnectionService -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmLayer3ForwardingDefaultConnectionService -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmLayer3ForwardingDefaultConnectionService -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingDefaultConnectionService
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
+        [System.String]$Url,
 
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [int32]$Port,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.String]$ConnectionService
+        [System.String]$NewDefaultConnectionService
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
         $avmWebrequestBody.Action = "SetDefaultConnectionService"
-        $avmWebrequestBody.InnerBody = "<s:NewDefaultConnectionService>{0}</s:NewDefaultConnectionService>" -f $ConnectionService
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+        $avmWebrequestBody.InnerBody = "<s:NewDefaultConnectionService>{0}</s:NewDefaultConnectionService>" -f $NewDefaultConnectionService
     }
 
     Process {
@@ -83,10 +59,10 @@ function Set-AvmLayer3ForwardingDefaultConnectionService {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
-            XmlResponse = "SetDefaultConnectionServiceResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

@@ -1,23 +1,9 @@
 function Set-AvmHomeautoDeviceName {
     <#
         .SYNOPSIS
-            Set FRITZ!Box device name
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHomeautoDeviceName
         .DESCRIPTION
-            Set FRITZ!Box device name
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHomeautoDeviceName
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,20 +12,7 @@ function Set-AvmHomeautoDeviceName {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmHomeautoDeviceName -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmHomeautoDeviceName -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmHomeautoDeviceName -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmHomeautoDeviceName -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmHomeautoDeviceName -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHomeautoDeviceName
     #>
 
     Param
@@ -63,10 +36,10 @@ function Set-AvmHomeautoDeviceName {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)][ValidateNotNullOrEmpty()]
-        [System.String]$Ain,
+        [System.String]$NewAIN,
 
         [Parameter(Mandatory)][ValidateNotNullOrEmpty()]
-        [System.String]$DeviceName
+        [System.String]$NewDeviceName
     )
 
     Begin {
@@ -78,7 +51,7 @@ function Set-AvmHomeautoDeviceName {
         $avmWebrequestBody.InnerBody = @"
 <s:NewAIN>{0}</s:NewAIN>
 <s:NewDeviceName>{1}</s:NewDeviceName>
-"@ -f $Ain, $DeviceName
+"@ -f $NewAIN, $NewDeviceName
     }
 
     Process {
