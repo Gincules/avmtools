@@ -1,9 +1,9 @@
 function Get-AvmAppRemoteInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmAppRemoteInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
     #>
 
     Param
@@ -23,7 +23,7 @@ function Get-AvmAppRemoteInfo {
 
         [Alias("r")]
         [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess= $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]

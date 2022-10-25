@@ -1,23 +1,9 @@
 function New-AvmFilelinkEntry {
     <#
         .SYNOPSIS
-            Get FRITZ!Box specific filelink entry
+            Wiki: https://github.com/Gincules/avmtools/wiki/New-AvmFilelinkEntry
         .DESCRIPTION
-            Get FRITZ!Box specific filelink entry
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/New-AvmFilelinkEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,47 +12,58 @@ function New-AvmFilelinkEntry {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> New-AvmFilelinkEntry -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> New-AvmFilelinkEntry -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> New-AvmFilelinkEntry -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> New-AvmFilelinkEntry -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> New-AvmFilelinkEntry -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/New-AvmFilelinkEntry
     #>
 
     Param
     (
-        [switch]$Insecure = $false,
-        [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$FilePath,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$FileAccessLimit,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$FileExpire
+        [Alias("i")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
+
+        [Alias("r")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("u")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewPath,
+
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$NewAccessCountLimit,
+
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$NewExpire
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Filelinks:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_filelinks"
         $avmWebrequestBody.Action = "NewFilelinkEntry"
         $avmWebrequestBody.InnerBody = @"
 <s:NewPath>{0}</s:NewPath>
 <s:NewAccessCountLimit>{0}</s:NewAccessCountLimit>
 <s:NewExpire>{0}</s:NewExpire>
-"@ -f $FilePath, $FileAccessLimit, $FileExpire
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+"@ -f $NewPath, $NewAccessCountLimit, $NewExpire
     }
 
     Process {
@@ -75,10 +72,10 @@ function New-AvmFilelinkEntry {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_filelinks"
-            XmlResponse = "NewFilelinkEntryResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

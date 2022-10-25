@@ -1,23 +1,9 @@
 function Set-AvmDeviceProvisioningCode {
     <#
         .SYNOPSIS
-            Set FRITZ!Box provisioning code
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmDeviceProvisioningCode
         .DESCRIPTION
-            Set FRITZ!Box provisioning code
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER DevicePersistentData
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmDeviceProvisioningCode
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,41 +12,46 @@ function Set-AvmDeviceProvisioningCode {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmDeviceProvisioningCode -DeviceProvisioningCode <DeviceProvisioningCode> -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmDeviceProvisioningCode -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmDeviceProvisioningCode -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmDeviceProvisioningCode -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmDeviceProvisioningCode -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmDeviceProvisioningCode
     #>
 
     Param
     (
-        [switch]$Insecure = $false,
-        [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$DeviceProvisioningCode
+        [Alias("i")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
+
+        [Alias("r")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("u")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewProvisioningCode
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:DeviceInfo:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceinfo"
         $avmWebrequestBody.Action = "SetProvisioningCode"
-        $avmWebrequestBody.InnerBody = "<s:NewProvisioningCode>{0}</s:NewProvisioningCode>" -f $DeviceProvisioningCode
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$SoapAction = $avmWebrequestBody.GenerateSoapAction()
+        $avmWebrequestBody.InnerBody = "<s:NewProvisioningCode>{0}</s:NewProvisioningCode>" -f $NewProvisioningCode
     }
 
     Process {
@@ -69,10 +60,10 @@ function Set-AvmDeviceProvisioningCode {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $SoapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceinfo"
-            XmlResponse = "SetProvisioningCodeResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

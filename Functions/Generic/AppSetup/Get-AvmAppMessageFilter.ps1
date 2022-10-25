@@ -23,7 +23,7 @@ function Get-AvmAppMessageFilter {
 
         [Alias("r")]
         [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess= $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]

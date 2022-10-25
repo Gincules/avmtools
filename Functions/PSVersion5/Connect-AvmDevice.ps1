@@ -1,23 +1,9 @@
 function Connect-AvmDevice {
     <#
         .SYNOPSIS
-            Base function for avmtool Get-Commands
+            Wiki: https://github.com/Gincules/avmtools/wiki
         .DESCRIPTION
-            This function is required for avmtools Get-Commands
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER SoapAction
-            service Type
-        .PARAMETER UrlPath
-            control URL
-        .PARAMETER XmlResponse
-            service response
+            Wiki: https://github.com/Gincules/avmtools/wiki
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,8 +12,7 @@ function Connect-AvmDevice {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Connect-AvmDevice -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential -SoapAction "urn:dslforum-org:service:DeviceInfo:1#GetSecurityPort" -UrlPath "/tr064/upnp/control/deviceinfo" -XmlResponse "GetSecurityPortResponse"
+            Wiki: https://github.com/Gincules/avmtools/wiki
     #>
 
     Param
@@ -41,7 +26,7 @@ function Connect-AvmDevice {
 
         [Parameter(Mandatory)]
         [ValidateRange(0,65535)]
-		[System.UInt16]$Port,
+        [System.UInt16]$Port,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]

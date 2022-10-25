@@ -1,23 +1,9 @@
 function Send-AvmDeviceSupportData {
     <#
         .SYNOPSIS
-            Send FRITZ!Box support data to AVM
+            Wiki: https://github.com/Gincules/avmtools/wiki/Send-AvmDeviceSupportData
         .DESCRIPTION
-            Send FRITZ!Box support data to AVM
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER DataType
-            Argument list of action DataType
+            Wiki: https://github.com/Gincules/avmtools/wiki/Send-AvmDeviceSupportData
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,38 +12,46 @@ function Send-AvmDeviceSupportData {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Send-AvmDeviceSupportData -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Send-AvmDeviceSupportData -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Send-AvmDeviceSupportData -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Send-AvmDeviceSupportData -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Send-AvmDeviceSupportData
     #>
 
     Param
     (
-        [switch]$Insecure = $false,
-        [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateSet("normal","mesh","unknown")][string]$DataMode
+        [Alias("i")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
+
+        [Alias("r")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("u")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateSet("normal","mesh","unknown")]
+        [System.String]$NewSupportDataMode
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:DeviceConfig:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         $avmWebrequestBody.Action = "X_AVM-DE_SendSupportData"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_SupportDataMode>{0}</s:NewX_AVM-DE_SupportDataMode>" -f $DataMode
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_SupportDataMode>{0}</s:NewX_AVM-DE_SupportDataMode>" -f $NewSupportDataMode
     }
 
     Process {
@@ -66,10 +60,10 @@ function Send-AvmDeviceSupportData {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
-            XmlResponse = "X_AVM-DE_SendSupportDataResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

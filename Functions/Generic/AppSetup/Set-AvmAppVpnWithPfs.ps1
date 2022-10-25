@@ -1,25 +1,9 @@
 function Set-AvmAppVpnWithPfs {
     <#
         .SYNOPSIS
-            Set FRITZ!Box app VPN with PFS
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmAppVpnWithPfs
         .DESCRIPTION
-            Set FRITZ!Box app VPN with PFS
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER AppId
-            Identifier of the app instance the message filter belongs to
-        .PARAMETER IPSecIdentifier
-            IPSec identifier
-        .PARAMETER IPSecPreSharedKey
-            IPSec pre-shared-key
-        .PARAMETER IPSecXauthCredential
-            Username and password for xauth as PSCredential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmAppVpnWithPfs
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -28,36 +12,51 @@ function Set-AvmAppVpnWithPfs {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmAppVpnWithPfs -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmAppVpnWithPfs -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmAppVpnWithPfs -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Set-AvmAppVpnWithPfs -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmAppVpnWithPfs
     #>
 
     Param
     (
-        [switch]$Insecure = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$AppId,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$IPSecIdentifier,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$IPSecPreSharedKey,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$IPSecXauthCredential
+        [Alias("i")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("u")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewAppId,
+
+        [Parameter()]
+        [System.String]$NewIPSecIdentifier,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewIPSecPreSharedKey,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$NewIPSecXauthCredential
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
+        $avmWebrequestBody.UrlPath = "/upnp/control/x_appsetup"
         $avmWebrequestBody.Action = "SetAppVPNwithPFS"
         $avmWebrequestBody.InnerBody = @"
 <s:NewAppId>{0}</s:NewAppId>
@@ -65,10 +64,7 @@ function Set-AvmAppVpnWithPfs {
 <s:NewIPSecPreSharedKey>{2}</s:NewIPSecPreSharedKey>
 <s:NewIPSecXauthUsername>{3}</s:NewIPSecXauthUsername>
 <s:NewIPSecXauthPassword>{4}</s:NewIPSecXauthPassword>
-"@ -f $AppId, $IPSecIdentifier, $IPSecPreSharedKey, $IPSecXauthCredential.GetNetworkCredential().UserName, $IPSecXauthCredential.GetNetworkCredential().Password
-
-        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
-        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
+"@ -f $NewAppId, $NewIPSecIdentifier, $NewIPSecPreSharedKey, $NewIPSecXauthCredential.GetNetworkCredential().UserName, $NewIPSecXauthCredential.GetNetworkCredential().Password
     }
 
     Process {
@@ -77,10 +73,10 @@ function Set-AvmAppVpnWithPfs {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmBodyParameter
-            SoapAction = $soapAction
-            UrlPath = "/upnp/control/x_appsetup"
-            XmlResponse = "SetAppVPNwithPFSResponse"
+            Body = $avmWebrequestBody.GenerateBody()
+            SoapAction = $avmWebrequestBody.GenerateSoapAction()
+            UrlPath = $avmWebrequestBody.UrlPath
+            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
         Invoke-AvmAction @splatParameters

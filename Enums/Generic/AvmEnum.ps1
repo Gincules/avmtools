@@ -4,3 +4,9 @@ enum RightEnum {
     RW = 6
     UNDEFINED
 }
+
+enum UpdateEnum {
+    unknown
+    failed
+    succeeded
+}
