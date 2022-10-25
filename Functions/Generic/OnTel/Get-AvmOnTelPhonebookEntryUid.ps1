@@ -1,23 +1,9 @@
 function Get-AvmOnTelPhonebookEntryUid {
     <#
         .SYNOPSIS
-            Update FRITZ!Box homeplug device
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmOnTelPhonebookEntryUid
         .DESCRIPTION
-            Update FRITZ!Box homeplug device
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
-        .PARAMETER a
-            Argument list of action SetConfig
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmOnTelPhonebookEntryUid
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -26,47 +12,41 @@ function Get-AvmOnTelPhonebookEntryUid {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelPhonebookEntryUid -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelPhonebookEntryUid -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelPhonebookEntryUid -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelPhonebookEntryUid -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmOnTelPhonebookEntryUid -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmOnTelPhonebookEntryUid
     #>
 
     Param
     (
+        [Alias("i")]
         [Parameter()]
-        [switch]$Insecure = $false,
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
+        [Alias("r")]
         [Parameter()]
-        [switch]$RemoteAccess = $false,
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Url,
+        [System.String]$Url,
 
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [int32]$Port,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [PSCredential]$Credential,
+        [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [string]$NewPhonebookID,
+        [ValidateRange(0,4294967295)]
+        [System.UInt32]$NewPhonebookID,
 
         [Parameter()]
-        [string]$NewPhonebookEntryID
+        [ValidateRange(0,4294967295)]
+        [System.UInt32]$NewPhonebookEntryUniqueID
     )
 
     Begin {
@@ -78,7 +58,7 @@ function Get-AvmOnTelPhonebookEntryUid {
         $avmWebrequestBody.InnerBody = @"
 <s:NewPhonebookID>{0}</s:NewPhonebookID>
 <s:NewPhonebookEntryUniqueID>{1}</s:NewPhonebookEntryUniqueID>
-"@ -f $NewPhonebookID, $NewPhonebookExtraID
+"@ -f $NewPhonebookID, $NewPhonebookEntryUniqueID
     }
 
     Process {

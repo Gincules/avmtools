@@ -1,9 +1,9 @@
 function Get-AvmDeviceSecurityPort {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-XXX
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmDeviceSecurityPort
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-XXX
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmDeviceSecurityPort
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmDeviceSecurityPort {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-XXX
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmDeviceSecurityPort
     #>
 
     Param

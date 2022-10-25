@@ -1,9 +1,9 @@
-function Get-AvmVoipCountryCode {
+function Get-AvmWlanConnectionInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipCountryCode
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWlanConnectionInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipCountryCode
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWlanConnectionInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipCountryCode {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipCountryCode
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWlanConnectionInfo
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-AvmVoipCountryCode {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:X_VoIP:1#GetVoIPCommonCountryCode"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        XmlResponse = "GetVoIPCommonCountryCodeResponse"
+        SoapAction = "urn:dslforum-org:service:WLANConfiguration:1#X_AVM-DE_GetWLANConnectionInfo"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wlanconfig1"
+        XmlResponse = "X_AVM-DE_GetWLANConnectionInfoResponse"
     }
     
     Connect-AvmDevice @splatParameters

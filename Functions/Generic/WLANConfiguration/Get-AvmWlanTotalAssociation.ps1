@@ -1,19 +1,9 @@
 function Get-AvmWlanTotalAssociation {
     <#
         .SYNOPSIS
-            Get FRITZ!Box WLAN total associations
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWlanTotalAssociation
         .DESCRIPTION
-            Returns FRITZ!Box total associations
-        .PARAMETER Insecure
-            Use unencrypted authentication over http instead of https
-        .PARAMETER RemoteAccess
-            Access FRITZ!Box from the internet
-        .PARAMETER Url
-            Url of FRITZ!Box
-        .PARAMETER Port
-            Port of FRITZ!Box
-        .PARAMETER Credential
-            PSCredential variable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWlanTotalAssociation
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -22,29 +12,33 @@ function Get-AvmWlanTotalAssociation {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmWlanTotalAssociation -RemoteAccess -Url "https://myfritzaddress12.myfritz.net" -Port 443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmWlanTotalAssociation -Url "https://fritz.box" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmWlanTotalAssociation -Insecure -Url "http://fritz.box" -Port 49000 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmWlanTotalAssociation -Url "https://192.168.178.1" -Port 49443 -Credential $Credential
-        .EXAMPLE
-            PS C:\> [PSCredential]$Credential = Get-Credential
-            PS C:\> Get-AvmWlanTotalAssociation -Insecure -Url "http://192.168.178.1" -Port 49000 -Credential $Credential
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWlanTotalAssociation
     #>
 
     Param
     (
-        [switch]$Insecure = $false,
-        [switch]$RemoteAccess = $false,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$Url,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][int32]$Port,
-        [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][PSCredential]$Credential
+        [Alias("i")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Insecure = $false,
+
+        [Alias("r")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("u")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$Url,
+
+        [Alias("p")]
+        [Parameter(Mandatory)]
+        [ValidateRange(0,65535)]
+        [System.UInt16]$Port,
+
+        [Alias("c")]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]$Credential
     )
 
     $splatParameters = @{
@@ -56,6 +50,6 @@ function Get-AvmWlanTotalAssociation {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wlanconfig1"
         XmlResponse = "GetTotalAssociationsResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }
