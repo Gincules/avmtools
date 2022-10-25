@@ -1,10 +1,10 @@
-emum EnabledEnum {
+enum EnabledEnum {
     DISABLED
     ENABLED
     UNDEFINED
 }
 
-emum PresentEnum {
+enum PresentEnum {
     DISCONNECTED
     REGISTERED
     CONNECTED
@@ -18,13 +18,13 @@ enum RightEnum {
     UNDEFINED
 }
 
-emum SwModeEnum {
+enum SwModeEnum {
     AUTO
     MANUAL
     UNDEFINED
 }
 
-emum SwStateEnum {
+enum SwStateEnum {
     OFF
     ON
     TOGGLE
@@ -37,13 +37,13 @@ enum UpdateEnum {
     succeeded
 }
 
-emum ValidEnum {
+enum ValidEnum {
     INVALID
     VALID
     UNDEFINED
 }
 
-emum VentilEnum {
+enum VentilEnum {
     CLOSED
     OPEN
     TEMP
