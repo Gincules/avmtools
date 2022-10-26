@@ -64,7 +64,7 @@ function Invoke-AvmAction {
             }
         }
     }
-    
+
     Process {
         # PowerShell 7.2
         # call TR-064 api and catch error
@@ -103,7 +103,7 @@ function Invoke-AvmAction {
             #$finalResult += $object
         }
     }
-    
+
     End {
         # return the result or $false if empty
         return (! ([System.String]::IsNullOrEmpty($finalResult))) ? $finalResult : $false
