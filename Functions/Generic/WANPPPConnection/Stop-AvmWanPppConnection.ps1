@@ -1,9 +1,9 @@
-function Get-WanDslLinkConfigLinkInfo {
+function Stop-AvmWanPppConnection {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigLinkInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Stop-AvmWanPppConnection
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigLinkInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Stop-AvmWanPppConnection
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-WanDslLinkConfigLinkInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigLinkInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Stop-AvmWanPppConnection
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-WanDslLinkConfigLinkInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetDSLLinkInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetDSLLinkInfoResponse"
+        SoapAction = "urn:dslforum-org:service:WANPPPConnection:1#ForceTermination"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wanpppconn1"
+        XmlResponse = "ForceTerminationResponse"
     }
     
     Connect-AvmDevice @splatParameters

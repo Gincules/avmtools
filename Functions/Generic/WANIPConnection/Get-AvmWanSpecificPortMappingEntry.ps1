@@ -1,9 +1,9 @@
-function Set-AvmWanDslLinkType {
+function Get-AvmWanSpecificPortMappingEntry {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmWanDslLinkType
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanSpecificPortMappingEntry
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmWanDslLinkType
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanSpecificPortMappingEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmWanDslLinkType {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmWanDslLinkType
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanSpecificPortMappingEntry
     #>
 
     Param
@@ -42,16 +42,28 @@ function Set-AvmWanDslLinkType {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewLinkType
+        [System.String]$NewRemoteHost,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewExternalPort,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewProtocol
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        $avmWebrequestBody.Action = "SetDSLLinkType"
-        $avmWebrequestBody.InnerBody = "<s:NewLinkType>{0}</s:NewLinkType>" -f $NewLinkType
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:WANIPConnection:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wanipconnection1"
+        $avmWebrequestBody.Action = "GetSpecificPortMappingEntry"
+        $avmWebrequestBody.InnerBody = @"
+<s:NewRemoteHost>{0}</s:NewRemoteHost>
+<s:NewExternalPort>{1}</s:NewExternalPort>
+<s:NewProtocol>{2}</s:NewProtocol>
+"@ -f $NewRemoteHost, $NewExternalPort, $NewProtocol
     }
 
     Process {

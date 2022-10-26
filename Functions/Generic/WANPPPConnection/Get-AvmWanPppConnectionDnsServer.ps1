@@ -1,9 +1,9 @@
-function Get-AvmWanDslConfigDestinationAddress {
+function Get-AvmWanPppConnectionDnsServer {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslConfigDestinationAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanPppConnectionDnsServer
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslConfigDestinationAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanPppConnectionDnsServer
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmWanDslConfigDestinationAddress {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslConfigDestinationAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanPppConnectionDnsServer
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-AvmWanDslConfigDestinationAddress {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetDestinationAddress"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetDestinationAddressResponse"
+        SoapAction = "urn:dslforum-org:service:WANPPPConnection:1#X_GetDNSServers"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wanpppconn1"
+        XmlResponse = "X_GetDNSServersResponse"
     }
     
     Connect-AvmDevice @splatParameters
