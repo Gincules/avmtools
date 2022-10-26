@@ -1,4 +1,3 @@
-Get-AvmWanDslInterfaceConfigDslInfo.ps1
 function Get-AvmWanDslInterfaceConfigDslInfo {
     <#
         .SYNOPSIS
