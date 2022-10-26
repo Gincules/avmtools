@@ -50,6 +50,6 @@ function Get-AvmVoipDialConfig {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
         XmlResponse = "X_AVM-DE_DialGetConfigResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

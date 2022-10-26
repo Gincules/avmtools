@@ -1,9 +1,10 @@
-function Get-WanDslLinkConfigInfo {
+Get-AvmWanDslInterfaceConfigDslInfo.ps1
+function Get-AvmWanDslInterfaceConfigDslInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigDslInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigDslInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +13,7 @@ function Get-WanDslLinkConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigDslInfo
     #>
 
     Param
@@ -46,10 +47,10 @@ function Get-WanDslLinkConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetInfoResponse"
+        SoapAction = "urn:dslforum-org:service:X_AVM-DE_Speedtest:1#X_AVM-DE_GetDSLInfo"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_speedtest"
+        XmlResponse = "X_AVM-DE_GetDSLInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

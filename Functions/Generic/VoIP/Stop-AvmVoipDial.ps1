@@ -1,9 +1,9 @@
-function Get-WanDslLinkConfigInfo {
+function Stop-AvmVoipDial {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Stop-AvmVoipDial
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Stop-AvmVoipDial
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-WanDslLinkConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Stop-AvmVoipDial
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-WanDslLinkConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetInfoResponse"
+        SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_DialHangup"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        XmlResponse = "X_AVM-DE_DialHangupResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

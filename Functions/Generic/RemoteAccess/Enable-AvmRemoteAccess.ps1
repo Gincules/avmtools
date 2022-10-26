@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Enable-AvmRemoteAccess {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmRemoteAccess
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmRemoteAccess
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmRemoteAccess
     #>
 
     Param
@@ -41,17 +41,17 @@ function Get-AvmVoipClient {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [ValidateRange(0,4294967295)]
+        [System.Byte][System.Boolean]$NewEnabled
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_RemoteAccess:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_remote"
+        $avmWebrequestBody.Action = "SetDDNSConfig"
+        $avmWebrequestBody.InnerBody = "<s:NewEnabled>{0}</s:NewEnabled>" -f $NewEnabled
     }
 
     Process {

@@ -1,9 +1,9 @@
-function Get-Get-WanDslInterfaceConfigInfo {
+function Get-AvmVoipClients {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-Get-WanDslInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClients
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-Get-WanDslInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClients
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-Get-WanDslInterfaceConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-Get-WanDslInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClients
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-Get-WanDslInterfaceConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLInterfaceConfig:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandslifconfig1"
-        XmlResponse = "GetInfoResponse"
+        SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_GetClients"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        XmlResponse = "X_AVM-DE_GetClientsResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

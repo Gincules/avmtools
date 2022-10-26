@@ -1,9 +1,9 @@
-function Get-WanDslLinkConfigInfo {
+function Request-StorageFtpServerWan {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Request-StorageFtpServerWan
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Request-StorageFtpServerWan
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-WanDslLinkConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Request-StorageFtpServerWan
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-WanDslLinkConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetInfoResponse"
+        SoapAction = "urn:dslforum-org:service:X_AVM-DE_Storage:1#RequestFTPServerWAN"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_storage"
+        XmlResponse = "RequestFTPServerWANResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

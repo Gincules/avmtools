@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Get-AvmVoipCommonAreaCode {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipCommonAreaCode
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipCommonAreaCode
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipCommonAreaCode
     #>
 
     Param
@@ -24,6 +24,10 @@ function Get-AvmVoipClient {
         [Alias("r")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("d")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Deprecated = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]
@@ -38,20 +42,17 @@ function Get-AvmVoipClient {
         [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Management.Automation.PSCredential]$Credential,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [System.Management.Automation.PSCredential]$Credential
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
-
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        if ($Deprecated) {
+            $SoapAction = "urn:dslforum-org:service:X_VoIP:1#GetVoIPCommonAreaCode"
+            $XmlResponse = "GetVoIPCommonAreaCodeResponse"
+        } else {
+            $SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_GetVoIPCommonAreaCode"
+            $XmlResponse = "X_AVM-DE_GetVoIPCommonAreaCodeResponse"
+        }
     }
 
     Process {
@@ -60,12 +61,11 @@ function Get-AvmVoipClient {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $SoapAction
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+            XmlResponse = $XmlResponse
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

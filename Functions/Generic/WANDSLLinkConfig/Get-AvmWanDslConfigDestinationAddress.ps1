@@ -1,9 +1,9 @@
-function Get-WanDslLinkConfigInfo {
+function Get-AvmWanDslConfigDestinationAddress {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslConfigDestinationAddress
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslConfigDestinationAddress
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-WanDslLinkConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslConfigDestinationAddress
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-WanDslLinkConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetInfo"
+        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetDestinationAddress"
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetInfoResponse"
+        XmlResponse = "GetDestinationAddressResponse"
     }
     
     Connect-AvmDevice @splatParameters

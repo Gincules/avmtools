@@ -1,9 +1,9 @@
-function Get-WanDslLinkConfigInfo {
+function Initialize-AvmUserInterfaceCgi {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Initialize-AvmUserInterfaceCgi
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Initialize-AvmUserInterfaceCgi
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,9 +12,9 @@ function Get-WanDslLinkConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-WanDslLinkConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Initialize-AvmUserInterfaceCgi
     #>
-
+    
     Param
     (
         [Alias("i")]
@@ -46,10 +46,10 @@ function Get-WanDslLinkConfigInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:WANDSLLinkConfig:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandsllinkconfig1"
-        XmlResponse = "GetInfoResponse"
+        SoapAction = "urn:dslforum-org:service:UserInterface:1#X_AVM-DE_DoUpdate"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/userif"
+        XmlResponse = "X_AVM-DE_DoUpdateResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

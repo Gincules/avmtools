@@ -1,9 +1,9 @@
-function Get-AvmVoipExtendedInfo {
+function Get-AvmVoipMaxNumber {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipExtendedInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipMaxNumber
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipExtendedInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipMaxNumber
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipExtendedInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipExtendedInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipMaxNumber
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-AvmVoipExtendedInfo {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:X_VoIP:1#GetInfoEx"
+        SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_GetNumberOfAlarmClocks"
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        XmlResponse = "GetInfoExResponse"
+        XmlResponse = "X_AVM-DE_GetNumberOfAlarmClocksResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

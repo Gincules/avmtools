@@ -25,6 +25,10 @@ function Get-AvmVoipCommonCountryCode {
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
+        [Alias("d")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Deprecated = $false,
+
         [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -41,15 +45,27 @@ function Get-AvmVoipCommonCountryCode {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
-        Insecure = $Insecure
-        Url = $Url
-        Port = $Port
-        Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_GetVoIPCommonCountryCode"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        XmlResponse = "X_AVM-DE_GetVoIPCommonCountryCodeResponse"
+    Begin {
+        if ($Deprecated) {
+            $SoapAction = "urn:dslforum-org:service:X_VoIP:1#GetVoIPCommonCountryCode"
+            $XmlResponse = "GetVoIPCommonCountryCodeResponse"
+        } else {
+            $SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_GetVoIPCommonCountryCode"
+            $XmlResponse = "X_AVM-DE_GetVoIPCommonCountryCodeResponse"
+        }
     }
-    
-    Connect-AvmDevice @splatParameters
+
+    Process {
+        $splatParameters = @{
+            Insecure = $Insecure
+            Url = $Url
+            Port = $Port
+            Credential = $Credential
+            SoapAction = $SoapAction
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+            XmlResponse = $XmlResponse
+        }
+
+        Connect-AvmDevice @splatParameters
+    }
 }

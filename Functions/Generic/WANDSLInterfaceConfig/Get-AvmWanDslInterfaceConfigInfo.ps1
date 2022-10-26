@@ -1,9 +1,9 @@
-function Get-AvmVoipAreaCode {
+function Get-AvmWanDslInterfaceConfigInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAreaCode
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAreaCode
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipAreaCode {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAreaCode
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigInfo
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-AvmVoipAreaCode {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:X_VoIP:1#GetVoIPCommonAreaCode"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        XmlResponse = "GetVoIPCommonAreaCodeResponse"
+        SoapAction = "urn:dslforum-org:service:WANDSLInterfaceConfig:1#GetInfo"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/wandslifconfig1"
+        XmlResponse = "GetInfoResponse"
     }
     
     Connect-AvmDevice @splatParameters

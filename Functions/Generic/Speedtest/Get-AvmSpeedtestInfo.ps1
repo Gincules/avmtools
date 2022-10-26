@@ -47,9 +47,9 @@ function Get-AvmSpeedtestInfo {
         Port = $Port
         Credential = $Credential
         SoapAction = "urn:dslforum-org:service:X_AVM-DE_Speedtest:1#GetInfo"
-        UrlPath = "/upnp/control/x_speedtest"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_speedtest"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

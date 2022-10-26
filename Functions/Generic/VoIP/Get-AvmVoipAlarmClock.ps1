@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Get-AvmVoipAlarmClock {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAlarmClock
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAlarmClock
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAlarmClock
     #>
 
     Param
@@ -42,7 +42,7 @@ function Get-AvmVoipClient {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [System.String]$NewIndex
     )
 
     Begin {
@@ -50,8 +50,8 @@ function Get-AvmVoipClient {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $avmWebrequestBody.Action = "X_AVM-DE_GetAlarmClock"
+        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
     }
 
     Process {

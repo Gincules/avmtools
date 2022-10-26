@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Set-AvmUserInterfaceInternationalConfig {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmUserInterfaceInternationalConfig
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmUserInterfaceInternationalConfig
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmUserInterfaceInternationalConfig
     #>
 
     Param
@@ -42,16 +42,28 @@ function Get-AvmVoipClient {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [System.String]$NewLanguage,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewCountry,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewAnnex
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:UserInterface:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/userif"
+        $avmWebrequestBody.Action = "X_AVM-DE_SetInternationalConfig"
+        $avmWebrequestBody.InnerBody = @"
+<s:NewX_AVM-DE_Language>{0}</s:NewX_AVM-DE_Language>
+<s:NewX_AVM-DE_Country>{1}</s:NewX_AVM-DE_Country>
+<s:NewX_AVM-DE_Annex>{2}</s:NewX_AVM-DE_Annex>
+"@ -f $NewLanguage, $NewCountry, $NewAnnex
     }
 
     Process {

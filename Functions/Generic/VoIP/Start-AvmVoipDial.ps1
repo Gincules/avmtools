@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Start-AvmVoipDial {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Start-AvmVoipDial
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Start-AvmVoipDial
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Start-AvmVoipDial
     #>
 
     Param
@@ -42,7 +42,11 @@ function Get-AvmVoipClient {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [System.Byte][System.Boolean]$NewT38FaxEnable,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewPhoneNumber
     )
 
     Begin {
@@ -50,8 +54,8 @@ function Get-AvmVoipClient {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $avmWebrequestBody.Action = "X_AVM-DE_DialNumber"
+        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_PhoneNumber>{0}</s:NewX_AVM-DE_PhoneNumber>" -f $NewPhoneNumber
     }
 
     Process {

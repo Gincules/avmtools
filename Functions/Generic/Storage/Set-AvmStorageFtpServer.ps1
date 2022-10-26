@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Set-AvmStorageFtpServer {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmStorageFtpServer
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmStorageFtpServer
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmStorageFtpServer
     #>
 
     Param
@@ -40,18 +40,17 @@ function Get-AvmVoipClient {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [Parameter()]
+        [System.Byte][System.Boolean]$NewFTPEnable = 0
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Storage:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_storage"
+        $avmWebrequestBody.Action = "SetFTPServer"
+        $avmWebrequestBody.InnerBody = "<s:NewFTPEnable>{0}</s:NewFTPEnable>" -f $NewFTPEnable
     }
 
     Process {

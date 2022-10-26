@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Update-AvmUserInterfaceManually {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmUserInterfaceManually
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmUserInterfaceManually
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmUserInterfaceManually
     #>
 
     Param
@@ -42,16 +42,23 @@ function Get-AvmVoipClient {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [System.String]$NewDownloadURL,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Byte][System.Boolean]$NewAllowDowngrade
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:UserInterface:1"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/userif"
+        $avmWebrequestBody.Action = "X_AVM-DE_DoManualUpdate"
+        $avmWebrequestBody.InnerBody = @"
+<s:NewX_AVM-DE_DownloadURL>{0}</s:NewX_AVM-DE_DownloadURL>
+<s:NewX_AVM-DE_AllowDowngrade>{1}</s:NewX_AVM-DE_AllowDowngrade>
+"@ -f $NewDownloadURL, $NewAllowDowngrade
     }
 
     Process {

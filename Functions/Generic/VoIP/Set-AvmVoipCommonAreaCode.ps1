@@ -1,9 +1,9 @@
-function Get-AvmVoipClient {
+function Set-AvmVoipCommonAreaCode {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmVoipCommonAreaCode
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmVoipCommonAreaCode
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipClient {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipClient
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmVoipCommonAreaCode
     #>
 
     Param
@@ -24,6 +24,10 @@ function Get-AvmVoipClient {
         [Alias("r")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
+
+        [Alias("d")]
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter]$Deprecated = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]
@@ -40,9 +44,14 @@ function Get-AvmVoipClient {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$NewClientIndex 
+        [Parameter()]
+        [System.String]$NewVoIPAreaCode,
+
+        [Parameter()]
+        [System.String]$NewOKZ,
+
+        [Parameter()]
+        [System.String]$NewOKZPrefix
     )
 
     Begin {
@@ -50,8 +59,17 @@ function Get-AvmVoipClient {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+
+        if ($Deprecated) {
+            $avmWebrequestBody.Action = "SetVoIPCommonAreaCode"
+            $avmWebrequestBody.InnerBody = "<s:NewVoIPEnableAreaCode>{0}</s:NewVoIPEnableAreaCode>" -f $NewVoIPAreaCode
+        } else {
+            $avmWebrequestBody.Action = "X_AVM-DE_SetVoIPCommonAreaCode"
+            $avmWebrequestBody.InnerBody = @"
+<s:NewX_AVM-DE_OKZ>{0}</s:NewX_AVM-DE_OKZ>
+<s:NewX_AVM-DE_OKZPrefix>{1}</s:NewX_AVM-DE_OKZPrefix>
+"@ -f $NewOKZ, $NewOKZPrefix
+        }
     }
 
     Process {

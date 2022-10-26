@@ -1,9 +1,9 @@
-function Get-AvmVoipAlarmClocks {
+function Get-AvmWanDslInterfaceConfigDiagnoseInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAlarmClocks
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigDiagnoseInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAlarmClocks
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigDiagnoseInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmVoipAlarmClocks {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmVoipAlarmClocks
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmWanDslInterfaceConfigDiagnoseInfo
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-AvmVoipAlarmClocks {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:X_VoIP:1#X_AVM-DE_GetNumberOfAlarmClocks"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        XmlResponse = "X_AVM-DE_GetNumberOfAlarmClocksResponse"
+        SoapAction = "urn:dslforum-org:service:X_AVM-DE_Speedtest:1#X_AVM-DE_GetDSLDiagnoseInfo"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_speedtest"
+        XmlResponse = "X_AVM-DE_GetDSLDiagnoseInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

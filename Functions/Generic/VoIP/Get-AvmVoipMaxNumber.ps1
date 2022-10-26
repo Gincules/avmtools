@@ -50,6 +50,6 @@ function Get-AvmVoipMaxNumber {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
         XmlResponse = "GetMaxVoIPNumbersResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }
