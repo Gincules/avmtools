@@ -80,11 +80,11 @@ function Connect-AvmDevice {
     }
 
     End {
-        # if http status code is not 200 (OK) return XML of FRITZ!Box response, else return http exeption response
-        if ($webResponse.StatusCode.value__) {
-            return $webResponse
-        } else {
+        # if $webResponse is $null return XML of FRITZ!Box response, else return expection response
+        if ($null -eq $webResponse) {
             return $avmResponse.Envelope.Body.$XmlResponse
+        } else {
+            return $webResponse
         }
     }
 }
