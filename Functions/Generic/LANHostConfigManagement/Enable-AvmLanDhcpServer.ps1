@@ -65,6 +65,6 @@ function Enable-AvmLanDhcpServer {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

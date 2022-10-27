@@ -65,6 +65,6 @@ function Enable-AvmManagementServerFirmwareDownload {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

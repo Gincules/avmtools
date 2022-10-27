@@ -65,6 +65,6 @@ function Set-AvmLayer3ForwardingDefaultConnectionService {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

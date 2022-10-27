@@ -70,6 +70,6 @@ function Set-AvmWanPppConnectionPassword {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
     
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

@@ -78,6 +78,6 @@ function Set-AvmAppMessageFilter {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

@@ -78,6 +78,6 @@ function Set-AvmUserInterfaceInternationalConfig {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

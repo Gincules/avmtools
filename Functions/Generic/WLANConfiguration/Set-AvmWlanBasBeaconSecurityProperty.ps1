@@ -73,6 +73,6 @@ function Set-AvmWlanBasBeaconSecurityProperty {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
     
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

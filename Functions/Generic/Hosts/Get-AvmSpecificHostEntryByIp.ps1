@@ -66,6 +66,6 @@ function Get-AvmSpecificHostEntryByIp {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

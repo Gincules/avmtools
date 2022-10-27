@@ -68,6 +68,6 @@ function Get-AvmHostAutoWakeOnLanByMacAddress {
             XmlResponse = "X_AVM-DE_GetAutoWakeOnLANByMACAddressResponse"
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

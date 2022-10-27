@@ -71,6 +71,6 @@ function Remove-AvmOnTelPhoneEntryByUid {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

@@ -95,6 +95,6 @@ function Add-AvmLayer3ForwardingEntry {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

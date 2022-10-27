@@ -66,6 +66,6 @@ function Set-AvmWanPppConnectionType {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
     
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

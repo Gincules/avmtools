@@ -65,6 +65,6 @@ function Get-AvmOnTelBarringEntryByNum {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

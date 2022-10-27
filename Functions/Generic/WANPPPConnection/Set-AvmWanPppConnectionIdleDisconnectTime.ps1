@@ -66,6 +66,6 @@ function Set-AvmWanPppConnectionIdleDisconnectTime {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

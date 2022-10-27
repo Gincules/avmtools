@@ -73,6 +73,6 @@ function Set-AvmVoipAlarmClockEnable {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

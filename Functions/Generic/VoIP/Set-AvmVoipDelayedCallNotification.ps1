@@ -73,6 +73,6 @@ function Set-AvmVoipDelayedCallNotification {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

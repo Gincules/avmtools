@@ -72,6 +72,6 @@ function Set-AvmOnTelPhonebookEntryUid {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

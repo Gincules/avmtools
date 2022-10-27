@@ -67,6 +67,6 @@ function Get-AvmHostGenericHostEntry {
         }
 
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

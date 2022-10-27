@@ -78,6 +78,6 @@ function Get-AvmWanPppConnectionSpecificPortMappingEntry {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
     
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

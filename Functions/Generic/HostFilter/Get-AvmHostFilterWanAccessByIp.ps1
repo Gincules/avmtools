@@ -66,6 +66,6 @@ function Get-AvmHostFilterWanAccessByIp {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }
