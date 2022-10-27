@@ -50,6 +50,6 @@ function Get-AvmAppConfig {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
         XmlResponse = "GetConfigResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

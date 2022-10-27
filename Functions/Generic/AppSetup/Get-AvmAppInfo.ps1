@@ -41,7 +41,6 @@ function Get-AvmAppInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-
     $splatParameters = @{
         Insecure = $Insecure
         Url = $Url
@@ -51,6 +50,6 @@ function Get-AvmAppInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

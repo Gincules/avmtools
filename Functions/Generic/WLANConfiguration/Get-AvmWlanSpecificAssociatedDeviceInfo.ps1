@@ -66,6 +66,6 @@ function Get-AvmWlanSpecificAssociatedDeviceInfo {
             XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
         }
 
-        Invoke-AvmAction @splatParameters
+        Connect-AvmDevice @splatParameters
     }
 }

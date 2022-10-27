@@ -258,7 +258,6 @@ FunctionsToExport = @(
     'Get-AvmWlanWpsInfo',
     'Initialize-AvmUserInterfaceCgi',
     'Install-AvmHostUpdate',
-    'Invoke-AvmAction',
     'New-AvmDeviceUrlSid',
     'New-AvmFilelinkEntry',
     'New-AvmOnTelPhonebook',

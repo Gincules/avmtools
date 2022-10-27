@@ -42,17 +42,23 @@ function Connect-AvmDevice {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$XmlResponse
+        [System.String]$XmlResponse,
+
+        [Parameter()]
+        $Body = $null
     )
 
     Begin {
+        # if body is $null a universal (not valid) xml will be assigned as string for body
+        $Body ??= '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>' -as [System.String]
+
         $splatParameters = @{
             Uri = $Url + ":" + $Port + $UrlPath
             Method = "Post"
             StatusCodeVariable = "statusCode"
             Credential = $Credential
             ContentType = "text/xml;charset=utf-8"
-            Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>'
+            Body = $Body
                     
             Headers = @{
                 "SoapAction" = $SoapAction
@@ -63,14 +69,21 @@ function Connect-AvmDevice {
 
     Process {
         # PowerShell 7.2
-        if ($Insecure) {
-            [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
-        } else {
-            [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+        # call TR-064 api and catch error
+        [System.Object]$webResponse = `
+            Try { `
+                if ($Insecure) { `
+                    [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -AllowUnencryptedAuthentication `
+                } else { `
+                    [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters `
+                } `
+            } Catch { `
+                $_.Exception.Response `
+            }
         }
-    }
 
     End {
-        return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $false
+        # if http status code is 200 (OK) return XML of FRITZ!Box response, else return http exeption response
+        return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $webResponse
     }
 }

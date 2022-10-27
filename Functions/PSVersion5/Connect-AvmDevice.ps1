@@ -42,17 +42,25 @@ function Connect-AvmDevice {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$XmlResponse
+        [System.String]$XmlResponse,
+
+        [Parameter()]
+        $Body = $null
     )
 
     Begin {
+        # if body is $null a universal (not valid) xml will be assigned as string for body
+        if ($null = $Body) {
+            $Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>' -as [System.String]
+        }
+
         $splatParameters = @{
             Uri = $Url + ":" + $Port + $UrlPath
             Method = "Post"
             Credential = $Credential
             ContentType = "text/xml;charset=utf-8"
-            Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>'
-                    
+            Body = $Body
+
             Headers = @{
                 "SoapAction" = $SoapAction
                 "User-Agent" = "AVM UPnP/1.0 Client 1.0"
@@ -62,14 +70,21 @@ function Connect-AvmDevice {
 
     Process {
         # PowerShell 5.1
-        [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters -WarningAction:SilentlyContinue -ErrorAction:SilentlyContinue
+        # call TR-064 api and catch error
+        [System.Object]$webResponse = `
+            Try { `
+                [System.Xml.XmlDocument]$avmResponse = Invoke-RestMethod @splatParameters `
+            } Catch { `
+                $_.Exception.Response `
+            }
     }
 
     End {
+        # if http status code is 200 (OK) return XML of FRITZ!Box response, else return http exeption response
         if ($null -ne $avmResponse) {
             return $avmResponse.Envelope.Body.$XmlResponse
         } else {
-            return $false
+            return $webResponse
         }
     }
 }
