@@ -50,7 +50,7 @@ function Connect-AvmDevice {
 
     Begin {
         # if body is $null a universal (not valid) xml will be assigned as string for body
-        if ($null = $Body) {
+        if ($null -eq $Body) {
             $Body = '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>' -as [System.String]
         }
 
@@ -59,7 +59,7 @@ function Connect-AvmDevice {
             Method = "Post"
             Credential = $Credential
             ContentType = "text/xml;charset=utf-8"
-            Body = $Body
+            Body = $Body 
 
             Headers = @{
                 "SoapAction" = $SoapAction
@@ -80,11 +80,11 @@ function Connect-AvmDevice {
     }
 
     End {
-        # if http status code is 200 (OK) return XML of FRITZ!Box response, else return http exeption response
-        if ($null -ne $avmResponse) {
-            return $avmResponse.Envelope.Body.$XmlResponse
-        } else {
+        # if http status code is not 200 (OK) return XML of FRITZ!Box response, else return http exeption response
+        if ($webResponse.StatusCode.value__) {
             return $webResponse
+        } else {
+            return $avmResponse.Envelope.Body.$XmlResponse
         }
     }
 }
