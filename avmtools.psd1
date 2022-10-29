@@ -12,7 +12,7 @@
 RootModule = 'avmtools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.311.17'
+ModuleVersion = '1.319.21'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -408,7 +408,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('avm', 'avmtools', 'fritzbox', 'fritz', 'api')
+        Tags = @('api', 'avm', 'avmtools', 'fritz', 'fritzbox', 'tr064', 'tr-064')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/Gincules/avmtools/blob/main/LICENSE'

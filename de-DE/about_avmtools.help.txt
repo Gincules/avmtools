@@ -1,0 +1,16 @@
+TOPIC
+    about_avmtools
+
+SHORT DESCRIPTION
+    Gibt einen Überblick über avmtools
+
+LONG DESCRIPTION
+    Willkommen zur Hilfe von avmtools.
+    
+    Hilfe erhalten Sie unter den folgenden Links:
+    Wiki: https://github.com/Gincules/avmtools/wiki
+    License: https://github.com/Gincules/avmtools/blob/main/LICENSE
+    Website: https://github.com/Gincules/avmtools
+
+KEYWORDS
+    avm avmtools fritzbox fritz api

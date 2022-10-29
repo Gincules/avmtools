@@ -49,7 +49,7 @@ function Connect-AvmDevice {
     )
 
     Begin {
-        # if body is $null a universal (not valid) xml will be assigned as string for body
+        # if body is $null a universal (for PowerShell not valid) xml will be assigned as string for body
         $Body ??= '<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:Response/></s:Body></s:Envelope>' -as [System.String]
 
         $splatParameters = @{
