@@ -50,6 +50,6 @@ function Get-AvmDectNumberOfEntry {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_dect"
         XmlResponse = "GetNumberOfDectEntriesResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

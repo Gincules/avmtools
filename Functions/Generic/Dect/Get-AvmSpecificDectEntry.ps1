@@ -15,7 +15,6 @@ function Get-AvmSpecificDectEntry {
             Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmSpecificDectEntry
     #>
 
-
     Param
     (
         [Alias("i")]
@@ -42,7 +41,7 @@ function Get-AvmSpecificDectEntry {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
+        [ValidateRange(1,415)]
         [System.String]$NewID
     )
 

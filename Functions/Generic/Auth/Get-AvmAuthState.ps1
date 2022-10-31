@@ -50,6 +50,6 @@ function Get-AvmAuthState {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_auth"
         XmlResponse = "GetStateResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

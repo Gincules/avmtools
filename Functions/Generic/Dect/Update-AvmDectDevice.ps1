@@ -15,7 +15,6 @@ function Update-AvmDectDevice {
             Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmDectDevice
     #>
 
-
     Param
     (
         [Alias("i")]
@@ -42,7 +41,7 @@ function Update-AvmDectDevice {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
+        [ValidateRange(1,415)]
         [System.String]$NewID
     )
 
