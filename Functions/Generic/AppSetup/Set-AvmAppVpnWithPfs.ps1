@@ -40,7 +40,8 @@ function Set-AvmAppVpnWithPfs {
         [ValidateNotNullOrEmpty()]
         [System.String]$NewAppId,
 
-        [Parameter()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String]$NewIPSecIdentifier,
 
         [Parameter(Mandatory)]
@@ -49,10 +50,18 @@ function Set-AvmAppVpnWithPfs {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Management.Automation.PSCredential]$NewIPSecXauthCredential
+        [System.String]$NewIPSecXauthUsername,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Security.SecureString]$NewIPSecXauthPassword
     )
 
     Begin {
+        $securePointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($NewIPSecXauthPassword)
+        $plainNewIPSecXauthPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($securePointer)
+        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($securePointer)
+
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
@@ -64,7 +73,7 @@ function Set-AvmAppVpnWithPfs {
 <s:NewIPSecPreSharedKey>{2}</s:NewIPSecPreSharedKey>
 <s:NewIPSecXauthUsername>{3}</s:NewIPSecXauthUsername>
 <s:NewIPSecXauthPassword>{4}</s:NewIPSecXauthPassword>
-"@ -f $NewAppId, $NewIPSecIdentifier, $NewIPSecPreSharedKey, $NewIPSecXauthCredential.GetNetworkCredential().UserName, $NewIPSecXauthCredential.GetNetworkCredential().Password
+"@ -f $NewAppId, $NewIPSecIdentifier, $NewIPSecPreSharedKey, $NewIPSecXauthUsername, $plainNewIPSecXauthPassword
     }
 
     Process {

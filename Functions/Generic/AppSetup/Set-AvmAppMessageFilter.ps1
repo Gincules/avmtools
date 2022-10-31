@@ -49,7 +49,7 @@ function Set-AvmAppMessageFilter {
         [System.String]$NewType,
 
         [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
+        [ValidateLength(1,1024)]
         [System.String]$NewFilter
     )
 
@@ -60,8 +60,8 @@ function Set-AvmAppMessageFilter {
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_appsetup"
         $avmWebrequestBody.Action = "SetAppMessageFilter"
         $avmWebrequestBody.InnerBody = @"
-<s:AppId>{0}</s:AppId>
-<s:Type>{1}</s:Type>
+<s:NewAppId>{0}</s:NewAppId>
+<s:NewType>{1}</s:NewType>
 <s:NewEventId>{2}</s:NewEventId>
 "@ -f $NewAppId, $NewType, $NewFilter
     }
