@@ -40,8 +40,8 @@ function Reset-AvmEvent {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter(Mandatory=$true)]
-        [ValidateRange(0,4294967295)]
+        [Parameter(Mandatory)]
+        [ValidateSet(0,300,500,501,502)]
         [System.Uint32]$NewEventId
     )
 

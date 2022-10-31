@@ -49,7 +49,11 @@ function Register-AvmApp {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [PSCredential]$NewAppCredential,
+        [System.String]$NewAppUsername,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.Security.SecureString]$NewAppPassword,
 
         [Parameter(Mandatory)]
         [ValidateSet("NO","RO","RW","UNDEFINED",0,2,4)]
@@ -73,6 +77,10 @@ function Register-AvmApp {
     )
 
     Begin {
+        $securePointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($NewAppPassword)
+        $plainNewAppPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($securePointer)
+        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($securePointer)
+
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_AppSetup:1"
@@ -89,7 +97,7 @@ function Register-AvmApp {
 <s:NewPhoneRight>{7}</s:NewPhoneRight>
 <s:NewHomeautoRight>{8}</s:NewHomeautoRight>
 <s:NewAppInternetRights>{9}</s:NewAppInternetRights>
-"@ -f $NewAppId, $NewAppDisplayName, $NewAppDeviceMAC, $NewAppCredential.GetNetworkCredential().UserName, $NewAppCredential.GetNetworkCredential().Password, $NewAppRight, $NewNasRight, $NewPhoneRight, $NewHomeautoRight, $NewAppInternetRights
+"@ -f $NewAppId, $NewAppDisplayName, $NewAppDeviceMAC, $NewAppUsername, $plainNewAppPassword, $NewAppRight, $NewNasRight, $NewPhoneRight, $NewHomeautoRight, $NewAppInternetRights
     }
 
     Process {

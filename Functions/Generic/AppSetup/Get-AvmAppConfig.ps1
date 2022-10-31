@@ -1,9 +1,9 @@
 function Get-AvmAppConfig {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppConfig
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppConfig
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmAppConfig {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppRemoteInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmAppConfig
     #>
 
     Param
