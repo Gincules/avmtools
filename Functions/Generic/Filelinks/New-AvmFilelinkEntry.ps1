@@ -61,8 +61,8 @@ function New-AvmFilelinkEntry {
         $avmWebrequestBody.Action = "NewFilelinkEntry"
         $avmWebrequestBody.InnerBody = @"
 <s:NewPath>{0}</s:NewPath>
-<s:NewAccessCountLimit>{0}</s:NewAccessCountLimit>
-<s:NewExpire>{0}</s:NewExpire>
+<s:NewAccessCountLimit>{1}</s:NewAccessCountLimit>
+<s:NewExpire>{2}</s:NewExpire>
 "@ -f $NewPath, $NewAccessCountLimit, $NewExpire
     }
 

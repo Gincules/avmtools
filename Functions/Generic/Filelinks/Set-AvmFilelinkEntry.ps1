@@ -42,7 +42,7 @@ function Set-AvmFilelinkEntry {
 
         [Parameter(Mandatory)]
         [ValidateRange(0,65535)]
-        [System.UInt16]$NewID,
+        [System.String]$NewID,
 
         [Parameter(Mandatory)]
         [ValidateRange(0,65535)]
@@ -50,7 +50,7 @@ function Set-AvmFilelinkEntry {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewExpire
+        [System.UInt16]$NewExpire
     )
 
     Begin {
@@ -61,8 +61,8 @@ function Set-AvmFilelinkEntry {
         $avmWebrequestBody.Action = "SetFilelinkEntry"
         $avmWebrequestBody.InnerBody = @"
 <s:NewID>{0}</s:NewID>
-<s:NewAccessCountLimit>{0}</s:NewAccessCountLimit>
-<s:NewExpire>{0}</s:NewExpire>
+<s:NewAccessCountLimit>{1}</s:NewAccessCountLimit>
+<s:NewExpire>{2}</s:NewExpire>
 "@ -f $NewID, $NewAccessCountLimit, $NewExpire
     }
 

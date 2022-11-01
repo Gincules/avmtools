@@ -1,9 +1,9 @@
-function Get-AvmFilelinskPath {
+function Get-AvmFilelinkNumberOfEntry {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmFilelinskPath
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmFilelinkNumberOfEntry
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmFilelinskPath
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmFilelinkNumberOfEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmFilelinskPath {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmFilelinskPath
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmFilelinkNumberOfEntry
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-AvmFilelinskPath {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:X_AVM-DE_Filelinks:1#GetFilelinkListPath"
+        SoapAction = "urn:dslforum-org:service:X_AVM-DE_Filelinks:1#GetNumberOfFilelinkEntries"
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_filelinks"
-        XmlResponse = "GetFilelinkListPathResponse"
+        XmlResponse = "GetNumberOfFilelinkEntriesResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }
