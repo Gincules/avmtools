@@ -50,6 +50,6 @@ function Reset-AvmDevice {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         XmlResponse = "FactoryResetResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

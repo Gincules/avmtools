@@ -50,6 +50,6 @@ function Get-AvmDeviceUuid {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         XmlResponse = "X_GenerateUUIDResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

@@ -42,15 +42,11 @@ function Get-AvmDeviceConfigFile {
 
         [Parameter()]
         [System.Security.SecureString]
-        $NewPassword,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$NewConfigFileUrl
+        $NewPassword = $null
     )
 
     Begin {
-        if (-Not ([System.String]::IsNullOrEmpty($NewPassword))) {
+        if ($null -ne $NewPassword) {
             $securePointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($NewPassword)
             $plainNewPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($securePointer)
             [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($securePointer)
@@ -61,10 +57,7 @@ function Get-AvmDeviceConfigFile {
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:DeviceConfig:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         $avmWebrequestBody.Action = "X_AVM-DE_GetConfigFile"
-        $avmWebrequestBody.InnerBody = @"
-<s:NewX_AVM-DE_Password>{0}</s:NewX_AVM-DE_Password>
-<s:NewX_AVM-DE_ConfigFileUrl>{1}</s:NewX_AVM-DE_ConfigFileUrl>
-"@ -f $plainNewPassword, $NewConfigFileUrl
+        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_Password>{0}</s:NewX_AVM-DE_Password>" -f $plainNewPassword
     }
 
     Process {

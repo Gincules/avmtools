@@ -41,7 +41,7 @@ function Set-AvmDeviceConfigFile {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.Security.SecureString]$NewPassword,
+        [System.Security.SecureString]$NewPassword = $null,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -49,7 +49,7 @@ function Set-AvmDeviceConfigFile {
     )
 
     Begin {
-        if (-Not ([System.String]::IsNullOrEmpty($NewPassword))) {
+        if ($null -ne $NewPassword) {
             $securePointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($NewPassword)
             $plainNewPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($securePointer)
             [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($securePointer)

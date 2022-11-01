@@ -50,6 +50,6 @@ function Get-AvmDeviceSupportDataInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         XmlResponse = "X_AVM-DE_GetSupportDataInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

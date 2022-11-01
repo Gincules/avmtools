@@ -41,7 +41,6 @@ function New-AvmDeviceUrlSid {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-
     $splatParameters = @{
         Insecure = $Insecure
         Url = $Url
@@ -51,6 +50,6 @@ function New-AvmDeviceUrlSid {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         XmlResponse = "X_AVM-DE_CreateUrlSIDResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

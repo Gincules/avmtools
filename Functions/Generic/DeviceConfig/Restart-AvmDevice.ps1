@@ -50,6 +50,6 @@ function Restart-AvmDevice {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         XmlResponse = "RebootResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

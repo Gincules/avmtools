@@ -15,7 +15,6 @@ function Get-AvmDevicePersistentData {
             Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmDevicePersistentData
     #>
 
-
     Param
     (
         [Alias("i")]
@@ -51,6 +50,6 @@ function Get-AvmDevicePersistentData {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceconfig"
         XmlResponse = "GetPersistentDataResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }
