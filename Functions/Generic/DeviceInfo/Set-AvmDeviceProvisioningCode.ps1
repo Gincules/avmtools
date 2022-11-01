@@ -40,8 +40,7 @@ function Set-AvmDeviceProvisioningCode {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
+        [Parameter()]
         [System.String]$NewProvisioningCode
     )
 

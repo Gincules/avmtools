@@ -50,6 +50,6 @@ function Get-AvmDeviceSecurityPort {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/deviceinfo"
         XmlResponse = "GetSecurityPortResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }
