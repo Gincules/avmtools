@@ -50,6 +50,6 @@ function Get-AvmHomeplugNumberOfEntry {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_homeplug"
         XmlResponse = "GetNumberOfDeviceEntriesResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }
