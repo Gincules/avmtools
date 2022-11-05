@@ -46,7 +46,7 @@ function Switch-AvmHomeautoDevice {
 
         [Parameter(Mandatory)]
         [ValidateSet("OFF","ON","TOGGLE","UNDEFINED")]
-        [SwModeEnum]$NewSwitchState
+        [SwStateEnum]$NewSwitchState
     )
 
     Begin {
@@ -54,7 +54,7 @@ function Switch-AvmHomeautoDevice {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Homeauto:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_homeauto"
-        $avmWebrequestBody.Action = "SetDeviceName"
+        $avmWebrequestBody.Action = "SetSwitch"
         $avmWebrequestBody.InnerBody = @"
 <s:NewAIN>{0}</s:NewAIN>
 <s:NewSwitchState>{1}</s:NewSwitchState>
