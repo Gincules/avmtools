@@ -38,34 +38,18 @@ function Get-AvmHostNumberOfEntry {
         [Alias("c")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Management.Automation.PSCredential]$Credential,
-
-        [Parameter(Mandatory)]
-        [ValidateRange(0,65535)]
-        [System.UInt16]$NewHostNumberOfEntries
+        [System.Management.Automation.PSCredential]$Credential
     )
 
-    Begin {
-        $avmWebrequestBody = [AvmBody]::new()
-
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "GetHostNumberOfEntries"
-        $avmWebrequestBody.InnerBody = "<s:NewHostNumberOfEntries>{0}</s:NewHostNumberOfEntries>" -f $NewHostNumberOfEntries
+    $splatParameters = @{
+        Insecure = $Insecure
+        Url = $Url
+        Port = $Port
+        Credential = $Credential
+        SoapAction = "urn:dslforum-org:service:Hosts:1#GetHostNumberOfEntries"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+        XmlResponse = "GetHostNumberOfEntriesResponse"
     }
 
-    Process {
-        $splatParameters = @{
-            Insecure = $Insecure
-            Url = $Url
-            Port = $Port
-            Credential = $Credential
-            Body = $avmWebrequestBody.GenerateBody()
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
-        }
-
-        Connect-AvmDevice @splatParameters
-    }
+    Connect-AvmDevice @splatParameters
 }

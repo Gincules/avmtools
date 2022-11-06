@@ -50,6 +50,6 @@ function Get-AvmHostMeshListPath {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
         XmlResponse = "X_AVM-DE_GetMeshListPathResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

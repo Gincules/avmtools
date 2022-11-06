@@ -50,6 +50,6 @@ function Get-AvmHostListPath {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
         XmlResponse = "X_AVM-DE_GetHostListPathResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

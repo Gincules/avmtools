@@ -1,9 +1,9 @@
-function Install-AvmHostUpdate {
+function Start-AvmHostWakeOnLanByMac {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Install-AvmHostUpdate
+            Wiki: https://github.com/Gincules/avmtools/wiki/Start-AvmHostWakeOnLanByMac
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Install-AvmHostUpdate
+            Wiki: https://github.com/Gincules/avmtools/wiki/Start-AvmHostWakeOnLanByMac
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Install-AvmHostUpdate {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Install-AvmHostUpdate
+            Wiki: https://github.com/Gincules/avmtools/wiki/Start-AvmHostWakeOnLanByMac
     #>
 
     Param
@@ -50,7 +50,7 @@ function Install-AvmHostUpdate {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "X_AVM-DE_HostDoUpdate"
+        $avmWebrequestBody.Action = "X_AVM-DE_WakeOnLANByMACAddress"
         $avmWebrequestBody.InnerBody = "<s:NewMACAddress>{0}</s:NewMACAddress>" -f $NewMACAddress
     }
 

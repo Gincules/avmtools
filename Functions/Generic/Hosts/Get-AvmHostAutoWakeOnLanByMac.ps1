@@ -1,9 +1,9 @@
-function Set-AvmHostAutoWakeOnLanByMacAddress {
+function Get-AvmHostAutoWakeOnLanByMac {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostAutoWakeOnLanByMacAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostAutoWakeOnLanByMac
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostAutoWakeOnLanByMacAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostAutoWakeOnLanByMac
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmHostAutoWakeOnLanByMacAddress {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostAutoWakeOnLanByMacAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostAutoWakeOnLanByMac
     #>
 
     Param
@@ -42,23 +42,18 @@ function Set-AvmHostAutoWakeOnLanByMacAddress {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewMACAddress,
-
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
-        [System.String]$NewHostName
+        [System.String]$NewMACAddress
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetHostNameByMACAddress"
-        $avmWebrequestBody.InnerBody = @"
-<s:NewMACAddress>{0}</s:NewMACAddress>
-<s:NewHostName>{1}</s:NewHostName>
-"@ -f $NewMACAddress, $NewHostName
+        $avmWebrequestBody.Action = "X_AVM-DE_GetAutoWakeOnLANByMACAddress"
+        $avmWebrequestBody.InnerBody = "<s:NewMACAddress>{0}</s:NewMACAddress>" -f $NewMACAddress
+
+        [xml]$avmBodyParameter = $avmWebrequestBody.GenerateBody()
+        [string]$soapAction = $avmWebrequestBody.GenerateSoapAction()
     }
 
     Process {
@@ -67,10 +62,10 @@ function Set-AvmHostAutoWakeOnLanByMacAddress {
             Url = $Url
             Port = $Port
             Credential = $Credential
-            Body = $avmWebrequestBody.GenerateBody()
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            Body = $avmBodyParameter
+            SoapAction = $soapAction
+            UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+            XmlResponse = "X_AVM-DE_GetAutoWakeOnLANByMACAddressResponse"
         }
 
         Connect-AvmDevice @splatParameters

@@ -50,6 +50,6 @@ function Get-AvmHostChangeCounter {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
         XmlResponse = "X_AVM-DE_GetChangeCounterResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

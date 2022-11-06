@@ -1,9 +1,9 @@
-function Get-AvmSpecificHostEntryByIp {
+function Update-AvmHost {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmSpecificHostEntryByIp
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmHost
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmSpecificHostEntryByIp
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmHost
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmSpecificHostEntryByIp {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmSpecificHostEntryByIp
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmHost
     #>
 
     Param
@@ -42,7 +42,7 @@ function Get-AvmSpecificHostEntryByIp {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Net.IPAddress]$NewIPAddress
+        [System.String]$NewMACAddress
     )
 
     Begin {
@@ -50,8 +50,8 @@ function Get-AvmSpecificHostEntryByIp {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetSpecificHostEntryByIp"
-        $avmWebrequestBody.InnerBody = "<s:NewIPAddress>{0}</s:NewIPAddress>" -f $NewIPAddress
+        $avmWebrequestBody.Action = "X_AVM-DE_HostDoUpdate"
+        $avmWebrequestBody.InnerBody = "<s:NewMACAddress>{0}</s:NewMACAddress>" -f $NewMACAddress
     }
 
     Process {

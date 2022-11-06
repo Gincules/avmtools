@@ -1,9 +1,9 @@
-function Get-AvmHostGenericHostEntry {
+function Get-AvmHostSpecificEntryByIp {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostGenericHostEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostSpecificEntryByIp
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostGenericHostEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostSpecificEntryByIp
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmHostGenericHostEntry {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostGenericHostEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmHostSpecificEntryByIp
     #>
 
     Param
@@ -41,8 +41,8 @@ function Get-AvmHostGenericHostEntry {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
-        [ValidateRange(0,65535)]
-        [System.UInt16]$NewIndex
+        [ValidateNotNullOrEmpty()]
+        [System.Net.IPAddress]$NewIPAddress
     )
 
     Begin {
@@ -50,8 +50,8 @@ function Get-AvmHostGenericHostEntry {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "GetGenericHostEntry"
-        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
+        $avmWebrequestBody.Action = "X_AVM-DE_GetSpecificHostEntryByIp"
+        $avmWebrequestBody.InnerBody = "<s:NewIPAddress>{0}</s:NewIPAddress>" -f $NewIPAddress
     }
 
     Process {

@@ -1,9 +1,9 @@
-function Set-AvmHostWakeOnLanByMacAddress {
+function Set-AvmHostNameByMac {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostWakeOnLanByMacAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostNameByMac
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostWakeOnLanByMacAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostNameByMac
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmHostWakeOnLanByMacAddress {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostWakeOnLanByMacAddress
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostNameByMac
     #>
 
     Param
@@ -42,7 +42,11 @@ function Set-AvmHostWakeOnLanByMacAddress {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$NewMACAddress
+        [System.String]$NewMACAddress,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewHostName
     )
 
     Begin {
@@ -50,8 +54,11 @@ function Set-AvmHostWakeOnLanByMacAddress {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Hosts:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
-        $avmWebrequestBody.Action = "X_AVM-DE_WakeOnLANByMACAddress"
-        $avmWebrequestBody.InnerBody = "<s:NewMACAddress>{0}</s:NewMACAddress>" -f $NewMACAddress
+        $avmWebrequestBody.Action = "X_AVM-DE_SetHostNameByMACAddress"
+        $avmWebrequestBody.InnerBody = @"
+<s:NewMACAddress>{0}</s:NewMACAddress>
+<s:NewHostName>{1}</s:NewHostName>
+"@ -f $NewMACAddress, $NewHostName
     }
 
     Process {
