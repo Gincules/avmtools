@@ -1,9 +1,9 @@
-function Remove-AvmHostFilterTickets {
+function Update-AvmHostFilterTickets {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Remove-AvmHostFilterTickets
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmHostFilterTickets
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Remove-AvmHostFilterTickets
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmHostFilterTickets
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Remove-AvmHostFilterTickets {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Remove-AvmHostFilterTickets
+            Wiki: https://github.com/Gincules/avmtools/wiki/Update-AvmHostFilterTickets
     #>
 
     Param
@@ -20,10 +20,6 @@ function Remove-AvmHostFilterTickets {
         [Alias("i")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
-
-        [Alias("r")]
-        [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]
@@ -47,9 +43,9 @@ function Remove-AvmHostFilterTickets {
         Port = $Port
         Credential = $Credential
         SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1#DiscardAllTickets"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
+        UrlPath = "/upnp/control/x_hostfilter"
         XmlResponse = "DiscardAllTicketsResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

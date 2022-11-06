@@ -21,10 +21,6 @@ function Get-AvmHostFilterTicketIdStatus {
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
-        [Alias("r")]
-        [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
-
         [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -41,15 +37,15 @@ function Get-AvmHostFilterTicketIdStatus {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()
-        ][System.String]$NewTicketID
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewTicketID
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
+        $avmWebrequestBody.UrlPath = "/upnp/control/x_hostfilter"
         $avmWebrequestBody.Action = "GetTicketIDStatus"
         $avmWebrequestBody.InnerBody = "<s:NewTicketID>{0}</s:NewTicketID>" -f $NewTicketID
     }

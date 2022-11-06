@@ -21,10 +21,6 @@ function Get-AvmHostFilterWanAccessByIp {
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
-        [Alias("r")]
-        [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
-
         [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -49,7 +45,7 @@ function Get-AvmHostFilterWanAccessByIp {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
+        $avmWebrequestBody.UrlPath = "/upnp/control/x_hostfilter"
         $avmWebrequestBody.Action = "GetWANAccessByIP"
         $avmWebrequestBody.InnerBody = "<s:NewIPv4Address>{0}</s:NewIPv4Address>" -f $NewIPv4Address
     }

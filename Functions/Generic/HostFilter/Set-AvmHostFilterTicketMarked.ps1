@@ -15,24 +15,11 @@ function Set-AvmHostFilterTicketMarked {
             Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmHostFilterTicketMarked
     #>
 
-    <#
-        RemoteAccess not working:
-        404 Not Found (ERR_NOT_FOUND)404 Not
-        FoundERR_NOT_FOUNDWebserver Mon, 17 Oct 2022
-        10:10:02 GMT
-
-        needs to be checked if supported
-    #>
-
     Param
     (
         [Alias("i")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
-
-        #[Alias("r")]
-        #[Parameter()]
-        #[System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]
@@ -50,16 +37,6 @@ function Set-AvmHostFilterTicketMarked {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    #$splatParameters = @{
-    #    Insecure = $Insecure
-    #    Url = $Url
-    #    Port = $Port
-    #    Credential = $Credential
-    #    SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1#MarkTicket"
-    #    UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
-    #    XmlResponse = "MarkTicketResponse"
-    #}
-    
     $splatParameters = @{
         Insecure = $Insecure
         Url = $Url
@@ -69,5 +46,6 @@ function Set-AvmHostFilterTicketMarked {
         UrlPath = "/upnp/control/x_hostfilter"
         XmlResponse = "MarkTicketResponse"
     }
+
     Connect-AvmDevice @splatParameters
 }

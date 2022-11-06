@@ -1,9 +1,9 @@
-function Deny-AvmHostFilterWanAccessById {
+function Deny-AvmHostFilterWanAccessByIp {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Deny-AvmHostFilterWanAccessById
+            Wiki: https://github.com/Gincules/avmtools/wiki/Deny-AvmHostFilterWanAccessByIp
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Deny-AvmHostFilterWanAccessById
+            Wiki: https://github.com/Gincules/avmtools/wiki/Deny-AvmHostFilterWanAccessByIp
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Deny-AvmHostFilterWanAccessById {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Deny-AvmHostFilterWanAccessById
+            Wiki: https://github.com/Gincules/avmtools/wiki/Deny-AvmHostFilterWanAccessByIp
     #>
 
     Param
@@ -20,10 +20,6 @@ function Deny-AvmHostFilterWanAccessById {
         [Alias("i")]
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
-
-        [Alias("r")]
-        [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
 
         [Alias("u")]
         [Parameter(Mandatory)]
@@ -42,21 +38,21 @@ function Deny-AvmHostFilterWanAccessById {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Net.IPAddress]$NewIPv4Address,
+        [System.String]$NewIPv4Address,
 
         [Parameter()]
-        [int][bool]$NewDisallow = 0
+        [System.SByte][System.Boolean]$NewDisallow = 0
     )
 
     Begin {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_HostFilter:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_hostfilter"
+        $avmWebrequestBody.UrlPath = "/upnp/control/x_hostfilter"
         $avmWebrequestBody.Action = "DisallowWANAccessByIP"
         $avmWebrequestBody.InnerBody = @"
 <s:NewIPv4Address>{0}</s:NewIPv4Address>
-<s:NewDisallow>{0}</s:NewDisallow>
+<s:NewDisallow>{1}</s:NewDisallow>
 "@ -f $NewIPv4Address, $NewDisallow
     }
 
