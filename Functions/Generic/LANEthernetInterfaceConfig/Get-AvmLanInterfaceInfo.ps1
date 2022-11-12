@@ -1,9 +1,9 @@
-function Get-AvmLanConfigInfo {
+function Get-AvmLanInterfaceInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanInterfaceInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanInterfaceInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLanConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanInterfaceInfo
     #>
 
     Param

@@ -126,7 +126,7 @@ FunctionsToExport = @(
     'Get-AvmLanConfigSecurityInfo',
     'Get-AvmLanCurrentUser',
     'Get-AvmLanEntry',
-    'Get-AvmLanConfigInfo',
+    'Get-AvmLanInterfaceInfo',
     'Get-AvmLanHostConfigManagementInfo',
     'Get-AvmLanRouterList',
     'Get-AvmLanStatistic',
