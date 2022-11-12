@@ -1,9 +1,9 @@
-function Get-AvmLanEthernetInterfaceConfigInfo {
+function Get-AvmLanConfigInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEthernetInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanConfigInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEthernetInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanConfigInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLanEthernetInterfaceConfigInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEthernetInterfaceConfigInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanConfigInfo
     #>
 
     Param
@@ -50,6 +50,6 @@ function Get-AvmLanEthernetInterfaceConfigInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanethernetifcfg"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

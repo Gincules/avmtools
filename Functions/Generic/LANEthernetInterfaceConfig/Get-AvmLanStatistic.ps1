@@ -50,6 +50,6 @@ function Get-AvmLanStatistic {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanethernetifcfg"
         XmlResponse = "GetStatisticsResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

@@ -1,9 +1,9 @@
-function Set-AvmLanEthernetInterfaceConfigEnable {
+function Enable-AvmLanInterface {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLanEthernetInterfaceConfigEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmLanInterface
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLanEthernetInterfaceConfigEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmLanInterface
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmLanEthernetInterfaceConfigEnable {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLanEthernetInterfaceConfigEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmLanInterface
     #>
 
     Param
@@ -49,7 +49,7 @@ function Set-AvmLanEthernetInterfaceConfigEnable {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANEthernetInterfaceConfig:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanethernetifcfg"
         $avmWebrequestBody.Action = "SetEnable"
         $avmWebrequestBody.InnerBody = "<s:NewEnable>{0}</s:NewEnable>" -f $NewEnable
     }
