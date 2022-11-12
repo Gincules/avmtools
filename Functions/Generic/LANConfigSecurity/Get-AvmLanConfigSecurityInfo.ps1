@@ -50,6 +50,6 @@ function Get-AvmLanConfigSecurityInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanconfigsecurity"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

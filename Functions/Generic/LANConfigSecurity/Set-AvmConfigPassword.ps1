@@ -53,7 +53,7 @@ function Set-AvmConfigPassword {
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANConfigSecurity:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/hosts"
+        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanconfigsecurity"
         $avmWebrequestBody.Action = "SetConfigPassword"
         $avmWebrequestBody.InnerBody = "<s:NewPassword>{0}</s:NewPassword>" -f $plainNewPassword
     }

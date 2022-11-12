@@ -50,6 +50,6 @@ function Get-AvmLanCurrentUser {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanconfigsecurity"
         XmlResponse = "X_AVM-DE_GetCurrentUserResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

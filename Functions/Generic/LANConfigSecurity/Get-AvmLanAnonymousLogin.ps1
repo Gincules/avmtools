@@ -50,6 +50,6 @@ function Get-AvmLanAnonymousLogin {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanconfigsecurity"
         XmlResponse = "X_AVM-DE_GetAnonymousLoginResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

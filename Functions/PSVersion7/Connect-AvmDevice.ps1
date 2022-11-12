@@ -64,6 +64,10 @@ function Connect-AvmDevice {
                 "SoapAction" = $SoapAction
                 "User-Agent" = "AVM UPnP/1.0 Client 1.0"
             }
+
+            ErrorAction = "SilentlyContinue"
+            WarningAction = "SilentlyContinue"
+            ErrorVariable = "responseError"
         }
     }
 
@@ -83,7 +87,7 @@ function Connect-AvmDevice {
         }
 
     End {
-        # if http status code is 200 (OK) return XML of FRITZ!Box response, else return http exeption response
-        return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $webResponse
+        # if http status code is 200 (OK) return XML of FRITZ!Box response, else return http exeption response and response error
+        return ($statusCode -eq 200) ? $avmResponse.Envelope.Body.$XmlResponse : $webResponse, $responseError
     }
 }
