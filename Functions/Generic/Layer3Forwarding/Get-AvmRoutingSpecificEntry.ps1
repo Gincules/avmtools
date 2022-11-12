@@ -1,9 +1,9 @@
-function Remove-AvmLayer3ForwardingEntry {
+function Get-AvmRoutingSpecificEntry {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Remove-AvmLayer3ForwardingEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingSpecificEntry
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Remove-AvmLayer3ForwardingEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingSpecificEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Remove-AvmLayer3ForwardingEntry {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Remove-AvmLayer3ForwardingEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingSpecificEntry
     #>
 
     Param
@@ -41,16 +41,20 @@ function Remove-AvmLayer3ForwardingEntry {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.Security.SecureString]$NewDestIPAddress,
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewDestIPAddress,
 
         [Parameter()]
-        [System.Security.SecureString]$NewDestSubnetMask,
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewDestSubnetMask,
 
         [Parameter()]
-        [System.Security.SecureString]$NewSourceIPAddress,
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewSourceIPAddress,
 
         [Parameter()]
-        [System.Security.SecureString]$NewSourceSubnetMask
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewSourceSubnetMask
     )
 
     Begin {
@@ -58,7 +62,7 @@ function Remove-AvmLayer3ForwardingEntry {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
-        $avmWebrequestBody.Action = "DeleteForwardingEntry"
+        $avmWebrequestBody.Action = "GetSpecificForwardingEntry"
         $avmWebrequestBody.InnerBody = @"
 <s:NewDestIPAddress>{0}</s:NewDestIPAddress>
 <s:NewDestSubnetMask>{1}</s:NewDestSubnetMask>

@@ -45,11 +45,11 @@ function Set-AvmLanInterfaceIp {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Net.IPAddress]$NewIPAddress,
+        [System.String]$NewIPAddress,
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Net.IPAddress]$NewSubnetMask,
+        [System.String]$NewSubnetMask,
 
         [Parameter()]
         [System.String]$NewIPAddressingType = "Static"

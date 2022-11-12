@@ -1,9 +1,9 @@
-function Set-AvmLayer3ForwardingEntryEnable {
+function Add-AvmRoutingEntry {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingEntryEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Add-AvmRoutingEntry
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingEntryEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Add-AvmRoutingEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmLayer3ForwardingEntryEnable {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingEntryEnable
+            Wiki: https://github.com/Gincules/avmtools/wiki/Add-AvmRoutingEntry
     #>
 
     Param
@@ -40,20 +40,37 @@ function Set-AvmLayer3ForwardingEntryEnable {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter()]
-        [System.Net.IPAddress]$NewDestIPAddress,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewType,
 
-        [Parameter()]
-        [System.Net.IPAddress]$NewDestSubnetMask,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewDestIPAddress,
 
-        [Parameter()]
-        [System.Net.IPAddress]$NewSourceIPAddress,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewDestSubnetMask,
 
-        [Parameter()]
-        [System.Net.IPAddress]$NewSourceSubnetMask,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewSourceIPAddress,
+        
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewSourceSubnetMask,
 
-        [Parameter()]
-        [System.Byte][System.Boolean]$NewEnable
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewGatewayIPAddress,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewInterface,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String]$NewForwardingMetric
     )
 
     Begin {
@@ -61,14 +78,17 @@ function Set-AvmLayer3ForwardingEntryEnable {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
-        $avmWebrequestBody.Action = "SetForwardingEntryEnable"
+        $avmWebrequestBody.Action = "AddForwardingEntry"
         $avmWebrequestBody.InnerBody = @"
-<s:NewDestIPAddress>{0}</s:NewDestIPAddress>
-<s:NewDestSubnetMask>{1}</s:NewDestSubnetMask>
-<s:NewSourceIPAddress>{2}</s:NewSourceIPAddress>
-<s:NewSourceSubnetMask>{3}</s:NewSourceSubnetMask>
-<s:NewEnable>{4}</s:NewEnable>
-"@ -f $NewDestIPAddress, $NewDestSubnetMask, $NewSourceIPAddress, $NewSourceSubnetMask, $NewEnable
+<s:NewType>{0}</s:NewType>
+<s:NewDestIPAddress>{1}</s:NewDestIPAddress>
+<s:NewDestSubnetMask>{2}</s:NewDestSubnetMask>
+<s:NewSourceIPAddress>{3}</s:NewSourceIPAddress>
+<s:NewSourceSubnetMask>{4}</s:NewSourceSubnetMask>
+<s:NewGatewayIPAddress>{5}</s:NewGatewayIPAddress>
+<s:NewInterface>{6}</s:NewInterface>
+<s:NewForwardingMetric>{7}</s:NewForwardingMetric>
+"@ -f $NewType, $NewDestIPAddress, $NewDestSubnetMask, $NewSourceIPAddress, $NewSourceSubnetMask, $NewGatewayIPAddress, $NewInterface, $NewForwardingMetric
     }
 
     Process {

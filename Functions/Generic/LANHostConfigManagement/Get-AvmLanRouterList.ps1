@@ -50,6 +50,6 @@ function Get-AvmLanRouterList {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
         XmlResponse = "GetIPRoutersListResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

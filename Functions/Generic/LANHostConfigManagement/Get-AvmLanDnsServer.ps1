@@ -1,9 +1,9 @@
-function Get-AvmLayer3ForwardingNumberOfEntry {
+function Get-AvmLanDnsServer {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLayer3ForwardingNumberOfEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanDnsServer
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLayer3ForwardingNumberOfEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanDnsServer
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLayer3ForwardingNumberOfEntry {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLayer3ForwardingNumberOfEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanDnsServer
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-AvmLayer3ForwardingNumberOfEntry {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1#GetForwardNumberOfEntries"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
-        XmlResponse = "GetForwardNumberOfEntriesResponse"
+        SoapAction = "urn:dslforum-org:service:LANHostConfigManagement:1#GetDNSServers"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
+        XmlResponse = "GetDNSServersResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

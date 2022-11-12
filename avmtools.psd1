@@ -125,9 +125,10 @@ FunctionsToExport = @(
     'Get-AvmLanAnonymousLogin',
     'Get-AvmLanConfigSecurityInfo',
     'Get-AvmLanCurrentUser',
-    'Get-AvmLanEntry',
+    'Get-AvmLanNumberOfEntry',
     'Get-AvmLanInterfaceInfo',
-    'Get-AvmLanHostConfigManagementInfo',
+    'Get-AvmLanDnsServer',
+    'Get-AvmLanManagementInfo',
     'Get-AvmLanRouterList',
     'Get-AvmLanStatistic',
     'Get-AvmLanSubnetMask',
@@ -382,7 +383,17 @@ FunctionsToExport = @(
     'Update-AvmDectDevice',
     'Update-AvmHomeplugDevice',
     'Update-AvmUserInterface',
-    'Update-AvmUserInterfaceManually'
+    'Update-AvmUserInterfaceManually',
+
+    'Get-AvmRoutingConnectionService',
+    'Add-AvmRoutingEntry',
+    'Enable-AvmRoutingEntry',
+    'Get-AvmRoutingGenericEntry',
+    'Get-AvmRoutingNumberOfEntry',
+    'Get-AvmRoutingSpecificEntry',
+    'Remove-AvmRoutingEntry',
+    'Set-AvmRoutingConnectionService',
+    'Get-AvmRoutingSpecificEntry'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

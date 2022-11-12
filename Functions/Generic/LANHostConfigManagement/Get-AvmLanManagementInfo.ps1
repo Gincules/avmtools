@@ -1,9 +1,9 @@
-function Get-AvmLanHostConfigManagementInfo {
+function Get-AvmLanManagementInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanHostConfigManagementInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanManagementInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanHostConfigManagementInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanManagementInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLanHostConfigManagementInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanHostConfigManagementInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanManagementInfo
     #>
 
     Param
@@ -50,6 +50,6 @@ function Get-AvmLanHostConfigManagementInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

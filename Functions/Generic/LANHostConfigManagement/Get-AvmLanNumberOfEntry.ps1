@@ -1,9 +1,9 @@
-function Get-AvmLanEntry {
+function Get-AvmLanNumberOfEntry {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanNumberOfEntry
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanNumberOfEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLanEntry {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanEntry
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanNumberOfEntry
     #>
 
     Param
@@ -50,6 +50,6 @@ function Get-AvmLanEntry {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
         XmlResponse = "GetIPInterfaceNumberOfEntriesResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

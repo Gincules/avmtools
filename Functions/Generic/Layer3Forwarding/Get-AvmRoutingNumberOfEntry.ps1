@@ -1,9 +1,9 @@
-function Get-AvmLayer3ForwardingDefaultConnectionService {
+function Get-AvmRoutingNumberOfEntry {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLayer3ForwardingDefaultConnectionService
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingNumberOfEntry
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLayer3ForwardingDefaultConnectionService
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingNumberOfEntry
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLayer3ForwardingDefaultConnectionService {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLayer3ForwardingDefaultConnectionService
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingNumberOfEntry
     #>
 
     Param
@@ -46,10 +46,10 @@ function Get-AvmLayer3ForwardingDefaultConnectionService {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1#GetDefaultConnectionService"
+        SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1#GetForwardNumberOfEntries"
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
-        XmlResponse = "GetDefaultConnectionServiceResponse"
+        XmlResponse = "GetForwardNumberOfEntriesResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

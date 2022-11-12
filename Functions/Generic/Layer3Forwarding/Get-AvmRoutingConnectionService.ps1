@@ -1,9 +1,9 @@
-function Get-AvmLanAddressRange {
+function Get-AvmRoutingConnectionService {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanAddressRange
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingConnectionService
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanAddressRange
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingConnectionService
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmLanAddressRange {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmLanAddressRange
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmRoutingConnectionService
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-AvmLanAddressRange {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:LANHostConfigManagement:1#GetAddressRange"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
-        XmlResponse = "GetAddressRangeResponse"
+        SoapAction = "urn:dslforum-org:service:Layer3Forwarding:1#GetDefaultConnectionService"
+        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/layer3forwarding"
+        XmlResponse = "GetDefaultConnectionServiceResponse"
     }
 
     Connect-AvmDevice @splatParameters

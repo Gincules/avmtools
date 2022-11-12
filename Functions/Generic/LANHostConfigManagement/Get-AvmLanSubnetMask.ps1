@@ -50,6 +50,6 @@ function Get-AvmLanSubnetMask {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
         XmlResponse = "GetSubnetMaskResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

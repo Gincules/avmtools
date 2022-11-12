@@ -42,7 +42,7 @@ function Set-AvmLanSubnetMask {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.Net.IPAddress]$NewSubnetMask
+        [System.String]$NewSubnetMask
     )
 
     Begin {
@@ -51,7 +51,7 @@ function Set-AvmLanSubnetMask {
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:LANHostConfigManagement:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/lanhostconfigmgm"
         $avmWebrequestBody.Action = "SetSubnetMask"
-        $avmWebrequestBody.InnerBody = "<s:NewSubnetMask>{0}</s:NewSubnetMask>" -f $SubnetMask
+        $avmWebrequestBody.InnerBody = "<s:NewSubnetMask>{0}</s:NewSubnetMask>" -f $NewSubnetMask
     }
 
     Process {

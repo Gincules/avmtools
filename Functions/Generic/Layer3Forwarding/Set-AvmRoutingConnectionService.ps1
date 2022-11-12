@@ -1,9 +1,9 @@
-function Set-AvmLayer3ForwardingDefaultConnectionService {
+function Set-AvmRoutingConnectionService {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingDefaultConnectionService
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmRoutingConnectionService
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingDefaultConnectionService
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmRoutingConnectionService
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmLayer3ForwardingDefaultConnectionService {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmLayer3ForwardingDefaultConnectionService
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmRoutingConnectionService
     #>
 
     Param
@@ -40,7 +40,8 @@ function Set-AvmLayer3ForwardingDefaultConnectionService {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]$Credential,
 
-        [Parameter()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String]$NewDefaultConnectionService
     )
 
