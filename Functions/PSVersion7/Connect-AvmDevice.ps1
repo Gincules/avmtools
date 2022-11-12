@@ -55,7 +55,6 @@ function Connect-AvmDevice {
         $splatParameters = @{
             Uri = $Url + ":" + $Port + $UrlPath
             Method = "Post"
-            StatusCodeVariable = "statusCode"
             Credential = $Credential
             ContentType = "text/xml;charset=utf-8"
             Body = $Body
@@ -65,8 +64,7 @@ function Connect-AvmDevice {
                 "User-Agent" = "AVM UPnP/1.0 Client 1.0"
             }
 
-            ErrorAction = "SilentlyContinue"
-            WarningAction = "SilentlyContinue"
+            StatusCodeVariable = "statusCode"
             ErrorVariable = "responseError"
         }
     }
