@@ -1,9 +1,9 @@
-function Set-AvmMangagementServerPeriodicInform {
+function Set-AvmMgmtSrvrConnReqAuth {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMangagementServerPeriodicInform
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrConnReqAuth
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMangagementServerPeriodicInform
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrConnReqAuth
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmMangagementServerPeriodicInform {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMangagementServerPeriodicInform
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrConnReqAuth
     #>
 
     Param
@@ -41,27 +41,28 @@ function Set-AvmMangagementServerPeriodicInform {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.Byte][System.Boolean]$NewPeriodicInformEnable = 0,
+        [System.String]$NewConnectionRequestUsername,
 
         [Parameter()]
-        [ValidateRange(0,4294967295)]
-        [System.UInt32]$NewPeriodicInformInterval,
-
-        [Parameter()]
-        [System.DateTime]$NewPeriodicInformTime
+        [System.Security.SecureString]$NewConnectionRequestPassword
     )
 
     Begin {
+        if (-Not ([System.String]::IsNullOrEmpty($NewConnectionRequestPassword))) {
+            $securePointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($NewConnectionRequestPassword)
+            $plainNewConnectionRequestPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($securePointer)
+            [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($securePointer)
+        }
+
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:ManagementServer:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-        $avmWebrequestBody.Action = "SetPeriodicInform"
+        $avmWebrequestBody.Action = "SetConnectionRequestAuthentication"
         $avmWebrequestBody.InnerBody = @"
-<s:NewPeriodicInformEnable>{0}</s:NewPeriodicInformEnable>
-<s:NewPeriodicInformInterval>{1}</s:NewPeriodicInformInterval>
-<s:NewPeriodicInformTime>{2}</s:NewPeriodicInformTime>
-"@ -f $NewPeriodicInformEnable, $NewPeriodicInformInterval, $NewPeriodicInformTime
+<s:NewConnectionRequestUsername>{0}</s:NewConnectionRequestUsername>
+<s:NewConnectionRequestPassword>{1}</s:NewConnectionRequestPassword>
+"@ -f $NewConnectionRequestUsername, $plainNewConnectionRequestPassword
     }
 
     Process {

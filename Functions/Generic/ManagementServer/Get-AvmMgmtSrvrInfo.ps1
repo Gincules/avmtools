@@ -1,9 +1,9 @@
-function Get-AvmManagementServerFirmwareDownload {
+function Get-AvmMgmtSrvrInfo {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmManagementServerFirmwareDownload
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMgmtSrvrInfo
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmManagementServerFirmwareDownload
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMgmtSrvrInfo
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmManagementServerFirmwareDownload {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmManagementServerFirmwareDownload
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMgmtSrvrInfo
     #>
 
     Param
@@ -46,9 +46,9 @@ function Get-AvmManagementServerFirmwareDownload {
         Url = $Url
         Port = $Port
         Credential = $Credential
-        SoapAction = "urn:dslforum-org:service:ManagementServer:1#X_AVM-DE_GetTR069FirmwareDownloadEnabled"
+        SoapAction = "urn:dslforum-org:service:ManagementServer:1#GetInfo"
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-        XmlResponse = "X_AVM-DE_GetTR069FirmwareDownloadEnabledResponse"
+        XmlResponse = "GetInfoResponse"
     }
 
     Connect-AvmDevice @splatParameters

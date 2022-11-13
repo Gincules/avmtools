@@ -1,9 +1,9 @@
-function Set-AvmManagemengServerUrl {
+function Set-AvmMgmtSrvrUsername {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagemengServerUrl
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUsername
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagemengServerUrl
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUsername
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmManagemengServerUrl {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagemengServerUrl
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUsername
     #>
 
     Param
@@ -41,7 +41,7 @@ function Set-AvmManagemengServerUrl {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.String]$NewURL
+        [System.String]$NewUsername
     )
 
     Begin {
@@ -49,8 +49,8 @@ function Set-AvmManagemengServerUrl {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:ManagementServer:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-        $avmWebrequestBody.Action = "SetManagementServerURL"
-        $avmWebrequestBody.InnerBody = "<s:NewURL>{0}</s:NewURL>" -f $NewURL
+        $avmWebrequestBody.Action = "SetManagementServerUsername"
+        $avmWebrequestBody.InnerBody = "<s:NewUsername>{0}</s:NewUsername>" -f $NewUsername
     }
 
     Process {

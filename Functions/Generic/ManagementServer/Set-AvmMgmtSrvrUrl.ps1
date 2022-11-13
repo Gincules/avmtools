@@ -1,9 +1,9 @@
-function Set-AvmManagementServerConnectionRequestAuthentication {
+function Set-AvmMgmtSrvrUrl {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagementServerConnectionRequestAuthentication
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUrl
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagementServerConnectionRequestAuthentication
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUrl
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmManagementServerConnectionRequestAuthentication {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmManagementServerConnectionRequestAuthentication
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUrl
     #>
 
     Param
@@ -41,7 +41,7 @@ function Set-AvmManagementServerConnectionRequestAuthentication {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.Management.Automation.PSCredential]$AuthCredential
+        [System.String]$NewURL
     )
 
     Begin {
@@ -49,11 +49,8 @@ function Set-AvmManagementServerConnectionRequestAuthentication {
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:ManagementServer:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-        $avmWebrequestBody.Action = "SetConnectionRequestAuthentication"
-        $avmWebrequestBody.InnerBody = @"
-<s:NewConnectionRequestUsername>{0}</s:NewConnectionRequestUsername>
-<s:NewConnectionRequestPassword>{1}</s:NewConnectionRequestPassword>
-"@ -f $AuthCredential.GetNetworkCredential().UserName, $AuthCredential.GetNetworkCredential().Password
+        $avmWebrequestBody.Action = "SetManagementServerURL"
+        $avmWebrequestBody.InnerBody = "<s:NewURL>{0}</s:NewURL>" -f $NewURL
     }
 
     Process {

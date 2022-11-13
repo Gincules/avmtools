@@ -1,9 +1,9 @@
-function Enable-AvmManagementServerFirmwareDownload {
+function Set-AvmMgmtSrvrPassword {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagementServerFirmwareDownload
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrPassword
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagementServerFirmwareDownload
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrPassword
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Enable-AvmManagementServerFirmwareDownload {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagementServerFirmwareDownload
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrPassword
     #>
 
     Param
@@ -41,16 +41,22 @@ function Enable-AvmManagementServerFirmwareDownload {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter()]
-        [System.Byte][System.Boolean]$NewTR069FirmwareDownloadEnabled
+        [System.Security.SecureString]$NewPassword
     )
 
     Begin {
+        if (-Not ([System.String]::IsNullOrEmpty($NewPassword))) {
+            $securePointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($NewPassword)
+            $plainNewPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($securePointer)
+            [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($securePointer)
+        }
+
         $avmWebrequestBody = [AvmBody]::new()
 
         $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:ManagementServer:1"
         $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/mgmsrv"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetTR069FirmwareDownloadEnabled"
-        $avmWebrequestBody.InnerBody = "<s:NewTR069FirmwareDownloadEnabled>{0}</s:NewTR069FirmwareDownloadEnabled>" -f $NewTR069FirmwareDownloadEnabled
+        $avmWebrequestBody.Action = "SetManagementServerPassword"
+        $avmWebrequestBody.InnerBody = "<s:NewPassword>{0}</s:NewPassword>" -f $plainNewPassword
     }
 
     Process {

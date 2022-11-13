@@ -1,9 +1,9 @@
-function Set-AvmServiceByIndex {
+function Set-AvmMyFritzServiceByIndex {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmServiceByIndex
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMyFritzServiceByIndex
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmServiceByIndex
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMyFritzServiceByIndex
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Set-AvmServiceByIndex {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmServiceByIndex
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMyFritzServiceByIndex
     #>
 
     Param

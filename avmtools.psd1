@@ -393,7 +393,28 @@ FunctionsToExport = @(
     'Get-AvmRoutingSpecificEntry',
     'Remove-AvmRoutingEntry',
     'Set-AvmRoutingConnectionService',
-    'Get-AvmRoutingSpecificEntry'
+    'Get-AvmRoutingSpecificEntry',
+
+
+
+
+    'Enable-AvmMgmtSrvrFirmwareDl',
+    'Get-AvmManagementServerFirmwareDl',
+    'Get-AvmMgmtSrvrInfo',
+    'Set-AvmMgmtSrvrConnReqAuth',
+    'Set-AvmMgmtSrvrPassword',
+    'Set-AvmMgmtSrvrPeriodicInform',
+    'Set-AvmMgmtSrvrUpgrade',
+    'Set-AvmMgmtSrvrUpgrades',
+    'Set-AvmMgmtSrvrUrl',
+    'Set-AvmMgmtSrvrUsername',
+    'Set-AvmMgmtSrvrUpgradeManaged',
+
+    'Enable-AvmMgmtSrvrTr069',
+    'Get-AvmMgmtSrvrFirmwareDl',
+
+    'Set-AvmMyFritzServiceByIndex'
+
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

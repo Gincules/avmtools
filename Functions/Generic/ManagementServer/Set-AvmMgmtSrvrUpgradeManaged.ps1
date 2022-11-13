@@ -1,9 +1,9 @@
-function Enable-AvmManagement {
+function Set-AvmMgmtSrvrUpgradeManaged {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagement
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUpgradeManaged
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagement
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUpgradeManaged
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Enable-AvmManagement {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Enable-AvmManagement
+            Wiki: https://github.com/Gincules/avmtools/wiki/Set-AvmMgmtSrvrUpgradeManaged
     #>
 
     Param
