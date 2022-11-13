@@ -57,7 +57,7 @@ function Set-AvmMyFritzServiceByIndex {
         [ValidateRange(0,65535)]
         [System.UInt16]$NewPort,
 
-        [Parameter(Mandatory)]
+        [Parameter()]
         [System.String]$NewURLPath,
 
         [Parameter()]
@@ -65,19 +65,20 @@ function Set-AvmMyFritzServiceByIndex {
         [System.String]$NewType,
 
         [Parameter()]
-        [System.Net.IPAddress]$NewIPv4Address,
+        [System.String]$NewIPv4Address,
 
         [Parameter()]
-        [System.Net.IPAddress]$NewIPv6Address,
+        [System.String]$NewIPv6Address,
 
         [Parameter()]
-        [System.Net.IPAddress]$NewIPv6InterfaceID,
+        [System.String]$NewIPv6InterfaceID,
 
         [Parameter()]
         [System.String]$NewMACAddress,
 
-        [Parameter()]
+        [Parameter(Mandatory)]
         [System.String]$NewHostName
+
     )
 
     Begin {
@@ -100,6 +101,7 @@ function Set-AvmMyFritzServiceByIndex {
 <s:NewMACAddress>{10}</s:NewMACAddress>
 <s:NewHostName>{11}</s:NewHostName>
 "@ -f $NewIndex, $NewEnabled, $NewName, $NewScheme, $NewPort, $NewURLPath, $NewType, $NewIPv4Address, $NewIPv6Address, $NewIPv6InterfaceID, $NewMACAddress, $NewHostName
+
     }
 
     Process {

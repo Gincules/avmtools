@@ -50,6 +50,6 @@ function Get-AvmMyFritzInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_myfritz"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @splatParameters
 }

@@ -413,7 +413,8 @@ FunctionsToExport = @(
     'Enable-AvmMgmtSrvrTr069',
     'Get-AvmMgmtSrvrFirmwareDl',
 
-    'Set-AvmMyFritzServiceByIndex'
+    'Set-AvmMyFritzServiceByIndex',
+    'Get-AvmMyFritzServiceByIndex'
 
 )
 

@@ -1,9 +1,9 @@
-function Get-AvmMyFritzServiceByInfo {
+function Get-AvmMyFritzServiceByIndex {
     <#
         .SYNOPSIS
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByIndex
         .DESCRIPTION
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByIndex
         .NOTES
             Author: Gincules
             Website: https://github.com/Gincules/avmtools
@@ -12,7 +12,7 @@ function Get-AvmMyFritzServiceByInfo {
             https://github.com/Gincules/avmtools
             https://github.com/Gincules/avmtools/blob/main/LICENSE
         .EXAMPLE
-            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByInfo
+            Wiki: https://github.com/Gincules/avmtools/wiki/Get-AvmMyFritzServiceByIndex
     #>
 
     Param
