@@ -414,7 +414,8 @@ FunctionsToExport = @(
     'Get-AvmMgmtSrvrFirmwareDl',
 
     'Set-AvmMyFritzServiceByIndex',
-    'Get-AvmMyFritzServiceByIndex'
+    'Get-AvmMyFritzServiceByIndex',
+    'Get-AvmOnTelInfo'
 
 )
 
