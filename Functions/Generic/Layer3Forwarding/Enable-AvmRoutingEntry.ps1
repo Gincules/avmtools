@@ -77,7 +77,7 @@ function Enable-AvmRoutingEntry {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$splatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port

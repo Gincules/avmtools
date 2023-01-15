@@ -41,7 +41,7 @@ function Restart-AvmDevice {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$splatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port

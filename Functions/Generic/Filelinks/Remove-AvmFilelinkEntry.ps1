@@ -55,7 +55,7 @@ function Remove-AvmFilelinkEntry {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$splatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
