@@ -514,7 +514,7 @@ function Get-AvmOnTelCallBarringList {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_contact"
         XmlResponse = "GetCallBarringListResponse"
     }
-    
+
     Connect-AvmDevice @SplatParameters
 }
 
@@ -570,7 +570,7 @@ function Get-AvmOnTelCallList {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_contact"
         XmlResponse = "GetCallListResponse"
     }
-    
+
     Connect-AvmDevice @SplatParameters
 }
 

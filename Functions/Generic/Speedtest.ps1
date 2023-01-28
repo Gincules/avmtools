@@ -21,10 +21,6 @@ function Get-AvmSpeedtestInfo {
         [Parameter()]
         [System.Management.Automation.SwitchParameter]$Insecure = $false,
 
-        [Alias("r")]
-        [Parameter()]
-        [System.Management.Automation.SwitchParameter]$RemoteAccess = $false,
-
         [Alias("u")]
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -47,7 +43,7 @@ function Get-AvmSpeedtestInfo {
         Port = $Port
         Credential = $Credential
         SoapAction = "urn:dslforum-org:service:X_AVM-DE_Speedtest:1#GetInfo"
-        UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_speedtest"
+        UrlPath = "/upnp/control/x_speedtest"
         XmlResponse = "GetInfoResponse"
     }
 
