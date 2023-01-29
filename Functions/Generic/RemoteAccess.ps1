@@ -122,7 +122,7 @@ function Get-AvmRemoteAccessDdnsInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_remote"
         XmlResponse = "GetDDNSInfoResponse"
     }
-    
+
     Connect-AvmDevice @SplatParameters
 }
 
@@ -178,7 +178,7 @@ function Get-AvmRemoteAccessDdnsProvider {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_remote"
         XmlResponse = "GetDDNSProvidersResponse"
     }
-    
+
     Connect-AvmDevice @SplatParameters
 }
 
@@ -234,7 +234,7 @@ function Get-AvmRemoteAccessInfo {
         UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_remote"
         XmlResponse = "GetInfoResponse"
     }
-    
+
     Connect-AvmDevice @SplatParameters
 }
 

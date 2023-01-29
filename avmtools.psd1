@@ -70,7 +70,7 @@ PowerShellVersion = '5.1'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    'Connect-AvmDevice',
+    # AppSetup
     'Get-AvmAppConfig',
     'Get-AvmAppInfo',
     'Get-AvmAppMessageFilter',
@@ -84,10 +84,14 @@ FunctionsToExport = @(
     'Get-AvmAuthInfo',
     'Get-AvmAuthState',
     'Set-AvmAuthConfig',
+
+    # Dect
     'Get-AvmDectNumberOfEntry',
     'Get-AvmGenericDectEntry',
     'Get-AvmSpecificDectEntry',
     'Update-AvmDectDevice',
+
+    # DeviceConfig
     'Get-AvmDeviceConfigFile',
     'Get-AvmDeviceConfigurationFinished',
     'Get-AvmDevicePersistentData',
@@ -104,6 +108,8 @@ FunctionsToExport = @(
     'Get-AvmDeviceLog',
     'Get-AvmDeviceSecurityPort',
     'Set-AvmDeviceProvisioningCode',
+
+    # Filelinks
     'Get-AvmFilelinkListPath',
     'Get-AvmFilelinkNumberOfEntry',
     'Get-AvmGenericFilelinkEntry',
@@ -111,20 +117,28 @@ FunctionsToExport = @(
     'New-AvmFilelinkEntry',
     'Remove-AvmFilelinkEntry',
     'Set-AvmFilelinkEntry',
+
+    # Homeauto
     'Get-AvmHomeautoGenericDeviceInfo',
     'Get-AvmHomeautoInfo',
     'Get-AvmHomeautoSpecificDeviceInfo',
     'Set-AvmHomeautoDeviceName',
     'Switch-AvmHomeautoDevice',
+
+    # Homeplug
     'Get-AvmHomeplugGenericDeviceEntry',
     'Get-AvmHomeplugNumberOfEntry',
     'Get-AvmHomeplugSpecificDevicEntry',
     'Update-AvmHomeplugDevice',
+
+    # HostFilter
     'Deny-AvmHostFilterWanAccessByIp',
     'Get-AvmHostFilterTicketIdStatus',
     'Get-AvmHostFilterWanAccessByIp',
     'Set-AvmHostFilterTicketMarked',
     'Update-AvmHostFilterTickets',
+
+    # Host
     'Find-AvmHostUpdate',
     'Get-AvmHostAutoWakeOnLanByMac',
     'Get-AvmHostChangeCounter',
@@ -138,14 +152,20 @@ FunctionsToExport = @(
     'Set-AvmHostNameByMac',
     'Start-AvmHostWakeOnLanByMac',
     'Update-AvmHost',
+
+    # LANConfigSecurity
     'Get-AvmLanAnonymousLogin',
     'Get-AvmLanConfigSecurityInfo',
     'Get-AvmLanCurrentUser',
     'Get-AvmLanUserList',
     'Set-AvmConfigPassword',
+
+    # LANEthernetInterfaceConfig
     'Enable-AvmLanInterface',
     'Get-AvmLanInterfaceInfo',
     'Get-AvmLanStatistic',
+
+    # LANHostConfigManagement
     'Enable-AvmLanDhcpServer',
     'Get-AvmLanAddressRange',
     'Get-AvmLanDnsServer',
@@ -157,6 +177,8 @@ FunctionsToExport = @(
     'Set-AvmLanInterfaceIp',
     'Set-AvmLanSubnetMask',
     'Set-AvmRouterIp',
+
+    # Layer3Forwarding
     'Add-AvmRoutingEntry',
     'Enable-AvmRoutingEntry',
     'Get-AvmRoutingConnectionService',
@@ -165,6 +187,8 @@ FunctionsToExport = @(
     'Get-AvmRoutingSpecificEntry',
     'Remove-AvmRoutingEntry',
     'Set-AvmRoutingConnectionService',
+
+    # ManagementServer
     'Enable-AvmMgmtSrvrFirmwareDl',
     'Enable-AvmMgmtSrvrTr069',
     'Get-AvmMgmtSrvrFirmwareDl',
@@ -175,11 +199,15 @@ FunctionsToExport = @(
     'Set-AvmMgmtSrvrUpgradeManaged',
     'Set-AvmMgmtSrvrUrl',
     'Set-AvmMgmtSrvrUsername',
+
+    # MyFritz
     'Get-AvmMyFritzInfo',
     'Get-AvmMyFritzNumberOfService',
     'Get-AvmMyFritzServiceByIndex',
     'Remove-AvmMyFritzServiceByIndex',
     'Set-AvmMyFritzServiceByIndex',
+
+    # OnTel
     'Enable-AvmOnTel',
     'Enable-AvmOnTelByIndex',
     'Enable-AvmOnTelConfigByIndex',
@@ -211,14 +239,20 @@ FunctionsToExport = @(
     'Set-AvmOnTelDectHandsetPhonebook',
     'Set-AvmOnTelPhonebookEntry',
     'Set-AvmOnTelPhonebookEntryUid',
+
+    # RemoveAccess
     'Enable-AvmRemoteAccess',
     'Get-AvmRemoteAccessDdnsInfo',
     'Get-AvmRemoteAccessDdnsProvider',
     'Get-AvmRemoteAccessInfo',
     'Set-AvmRemoteAccessConfig',
     'Set-AvmRemoteAccessDdnsConfig',
+
+    # Speedtest
     'Get-AvmSpeedtestInfo',
     'Set-AvmSpeedtestConfig',
+
+    # Storage
     'Get-AvmStorageInfo',
     'Get-AvmStorageUserInfo',
     'Request-StorageFtpServerWan',
@@ -226,16 +260,24 @@ FunctionsToExport = @(
     'Set-AvmStorageFtpServerWan',
     'Set-AvmStorageSmbServer',
     'Set-AvmStorageUserConfig',
+
+    # TAM
     'Enable-AvmTam';
     'Get-AvmTamInfo';
     'Get-AvmTamList';
     'Get-AvmTamMessageList';
     'Remove-AvmTamMessage';
     'Set-AvmTamMarkMessage',
+
+    # Time
     'Get-AvmTimeInfo',
     'Set-AvmTimeNtpServer',
+
+    # UPnP
     'Get-AvmUpnpInfo',
     'Set-AvmUpnpConfig',
+
+    # UserInterface
     'Find-AvmUserInterfaceUpdate',
     'Get-AvmUserInterfaceInfo',
     'Get-AvmUserInterfaceInternationalConfig',
@@ -245,6 +287,8 @@ FunctionsToExport = @(
     'Set-AvmUserInterfaceInternationalConfig',
     'Update-AvmUserInterface',
     'Update-AvmUserInterfaceManually',
+
+    # VoIP
     'Add-AvmVoipAccount',
     'Get-AvmVoipAccount',
     'Get-AvmVoipAlarmClock',
@@ -283,6 +327,8 @@ FunctionsToExport = @(
     'Set-AvmVoipEnableCountryCode',
     'Start-AvmVoipDial',
     'Stop-AvmVoipDial',
+
+    # WANCommonInterfaceConfig
     'Get-AvmWanLinkProperty',
     'Get-AvmWanOnlineMonitor',
     'Get-AvmWanTotalByteReceived',
@@ -290,10 +336,14 @@ FunctionsToExport = @(
     'Get-AvmWanTotalPacketReceived',
     'Get-AvmWanTotalPacketSent',
     'Set-AvmWanAccessType',
+
+    # WANDSLInterfaceConfig
     'Get-AvmWanDslInterfaceConfigDiagnoseInfo',
     'Get-AvmWanDslInterfaceConfigDslInfo',
     'Get-AvmWanDslInterfaceConfigInfo',
     'Get-AvmWanDslInterfaceConfigTotalStatistic',
+
+    # WANDSLLinkConfig
     'Get-AvmWanDslLinkAutoConfig',
     'Get-AvmWanDslLinkConfigAtmEncapsulation',
     'Get-AvmWanDslLinkConfigDestinationAddress',
@@ -304,7 +354,11 @@ FunctionsToExport = @(
     'Set-AvmWanDslLinkConfigAtmEncapsulation',
     'Set-AvmWanDslLinkConfigEnable',
     'Set-AvmWanDslLinkConfigType',
+
+    # WANEthernetLinkConfig
     'Get-AvmWanEthernetLinkStatus',
+
+    # WANIPConnection
     'Add-AvmWanPortMapping',
     'Get-AvmWanDnsServer',
     'Get-AvmWanExternalAddress',
@@ -323,6 +377,8 @@ FunctionsToExport = @(
     'Set-AvmWanRouteProtocolRx',
     'Start-AvmWanConnection',
     'Stop-AvmWanConnection',
+
+    # WANPPPConnection
     'Add-AvmWanPppConnectionPortMapping',
     'Get-AvmWanPppConnectionDnsServer',
     'Get-AvmWanPppConnectionExternalIpAddress',
@@ -346,8 +402,12 @@ FunctionsToExport = @(
     'Set-AvmWanPppConnectoinTrigger',
     'Start-AvmWanPppConnection',
     'Stop-AvmWanPppConnection',
+
+    # WebDAVClient
     'Get-AvmWebDavClientInfo',
     'Set-AvmWebDavClientConfig',
+
+    # WLANConfiguration
     'Get-AvmWlanBeaconAdvertisement',
     'Get-AvmWlanBeaconType',
     'Get-AvmWlanBssid',
@@ -439,7 +499,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'https://github.com/Gincules/avmtools/wiki'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
