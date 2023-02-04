@@ -55,7 +55,7 @@ function Enable-AvmRemoteAccess {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -113,7 +113,7 @@ function Get-AvmRemoteAccessDdnsInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -169,7 +169,7 @@ function Get-AvmRemoteAccessDdnsProvider {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -225,7 +225,7 @@ function Get-AvmRemoteAccessInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -308,7 +308,7 @@ function Set-AvmRemoteAccessConfig {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -418,7 +418,7 @@ function Set-AvmRemoteAccessDdnsConfig {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port

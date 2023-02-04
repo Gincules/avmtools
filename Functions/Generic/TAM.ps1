@@ -62,7 +62,7 @@ function Enable-AvmTam {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -138,7 +138,7 @@ function Get-AvmTamInfo {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -196,7 +196,7 @@ function Get-AvmTamList {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -266,7 +266,7 @@ function Get-AvmTamMessageList {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -345,7 +345,7 @@ function Remove-AvmTamMessage {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -427,7 +427,7 @@ function Set-AvmTamMarkMessage {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port

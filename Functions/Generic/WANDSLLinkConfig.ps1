@@ -41,7 +41,7 @@ function Get-AvmWanDslLinkAutoConfig {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -97,7 +97,7 @@ function Get-AvmWanDslLinkConfigAtmEncapsulation {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -153,7 +153,7 @@ function Get-AvmWanDslLinkConfigDestinationAddress {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -209,7 +209,7 @@ function Get-AvmWanDslLinkConfigInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -265,7 +265,7 @@ function Get-AvmWanDslLinkConfigLinkInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -321,7 +321,7 @@ function Get-AvmWanDslLinkConfigStatistic {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -391,7 +391,7 @@ function Set-AvmWanDslConfigDestinationAddress {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -463,7 +463,7 @@ function Set-AvmWanDslLinkConfigAtmEncapsulation {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -535,7 +535,7 @@ function Set-AvmWanDslLinkConfigEnable {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -607,7 +607,7 @@ function Set-AvmWanDslLinkConfigType {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port

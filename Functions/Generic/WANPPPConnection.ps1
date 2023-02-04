@@ -92,7 +92,7 @@ function Add-AvmWanPppConnectionPortMapping {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -150,7 +150,7 @@ function Get-AvmWanPppConnectionDnsServer {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -206,7 +206,7 @@ function Get-AvmWanPppConnectionExternalIpAddress {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -276,7 +276,7 @@ function Get-AvmWanPppConnectionGenericPortMappingEntry {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -334,7 +334,7 @@ function Get-AvmWanPppConnectionInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -390,7 +390,7 @@ function Get-AvmWanPppConnectionLinkLayerMaxBitRate {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -446,7 +446,7 @@ function Get-AvmWanPppConnectionNatRsipStatus {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -528,7 +528,7 @@ function Get-AvmWanPppConnectionSpecificPortMappingEntry {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -586,7 +586,7 @@ function Get-AvmWanPppConnectionStatusInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -642,7 +642,7 @@ function Get-AvmWanPppConnectionTypeInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -698,7 +698,7 @@ function Get-AvmWanPppConnectionUserName {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -754,7 +754,7 @@ function Get-AvmWanPppConnectoinAutoDisconnectTimeSpan {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -810,7 +810,7 @@ function Get-AvmWanPppConnectonPortMappingNumberOfEntry {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -892,7 +892,7 @@ function Remove-AvmWanPppConnectionPortMapping {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -964,7 +964,7 @@ function Set-AvmWanPppConnectionIdleDisconnectTime {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1040,7 +1040,7 @@ function Set-AvmWanPppConnectionPassword {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1112,7 +1112,7 @@ function Set-AvmWanPppConnectionRouteProtocolRx {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1184,7 +1184,7 @@ function Set-AvmWanPppConnectionType {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1256,7 +1256,7 @@ function Set-AvmWanPppConnectionUserName {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1335,7 +1335,7 @@ function Set-AvmWanPppConnectoinAutoDisconnectTimeSpan {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1407,7 +1407,7 @@ function Set-AvmWanPppConnectoinTrigger {
     }
     
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -1465,7 +1465,7 @@ function Start-AvmWanPppConnection {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1521,7 +1521,7 @@ function Stop-AvmWanPppConnection {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port

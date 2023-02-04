@@ -41,7 +41,7 @@ function Get-AvmWanEthernetLinkStatus {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port

@@ -55,7 +55,7 @@ function Find-AvmUserInterfaceUpdate {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -113,7 +113,7 @@ function Get-AvmUserInterfaceInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -169,7 +169,7 @@ function Get-AvmUserInterfaceInternationalConfig {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -225,7 +225,7 @@ function Get-AvmUserInterfaceUpdateInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -281,7 +281,7 @@ function Initialize-AvmUserInterfaceCgi {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -351,7 +351,7 @@ function Set-AvmUserInterfaceConfig {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -435,7 +435,7 @@ function Set-AvmUserInterfaceInternationalConfig {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -493,7 +493,7 @@ function Initialize-AvmUserInterfaceCgi {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $SplatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -570,7 +570,7 @@ function Update-AvmUserInterfaceManually {
     }
 
     Process {
-        $SplatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port

@@ -66,12 +66,12 @@ function Add-AvmVoipAccount {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_AddVoIPAccount"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_AddVoIPAccount"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>
 <s:NewVoIPRegistrar>{1}</s:NewVoIPRegistrar>
 <s:NewVoIPNumber>{2}</s:NewVoIPNumber>
@@ -83,18 +83,18 @@ function Add-AvmVoipAccount {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -146,27 +146,27 @@ function Get-AvmVoipAccount {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetVoIPAccount"
-        $avmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetVoIPAccount"
+        $AvmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -218,27 +218,27 @@ function Get-AvmVoipAlarmClock {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetAlarmClock"
-        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetAlarmClock"
+        $AvmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -290,27 +290,27 @@ function Get-AvmVoipClient {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetClient"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -362,27 +362,27 @@ function Get-AvmVoipClient2 {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient2"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetClient2"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -434,27 +434,27 @@ function Get-AvmVoipClient3 {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient3"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetClient3"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -506,27 +506,27 @@ function Get-AvmVoipClientByIp {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetClient3"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientId>{0}</s:NewX_AVM-DE_ClientId>" -f $NewClientId
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetClient3"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientId>{0}</s:NewX_AVM-DE_ClientId>" -f $NewClientId
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -573,7 +573,7 @@ function Get-AvmVoipClients {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -583,7 +583,7 @@ function Get-AvmVoipClients {
         XmlResponse = "X_AVM-DE_GetClientsResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipCommonAreaCode {
@@ -644,7 +644,7 @@ function Get-AvmVoipCommonAreaCode {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -654,7 +654,7 @@ function Get-AvmVoipCommonAreaCode {
             XmlResponse = $XmlResponse
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -716,7 +716,7 @@ function Get-AvmVoipCommonCountryCode {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
@@ -726,7 +726,7 @@ function Get-AvmVoipCommonCountryCode {
             XmlResponse = $XmlResponse
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -773,7 +773,7 @@ function Get-AvmVoipDialConfig {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -783,7 +783,7 @@ function Get-AvmVoipDialConfig {
         XmlResponse = "X_AVM-DE_DialGetConfigResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipEnableAreaCode {
@@ -834,27 +834,27 @@ function Get-AvmVoipEnableAreaCode {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Speedtest:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_speedtest"
-        $avmWebrequestBody.Action = "GetVoIPEnableAreaCode"
-        $avmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_AVM-DE_Speedtest:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_speedtest"
+        $AvmWebrequestBody.Action = "GetVoIPEnableAreaCode"
+        $AvmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -906,27 +906,27 @@ function Get-AvmVoipEnableCountryCode {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "GetVoIPEnableCountryCode"
-        $avmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "GetVoIPEnableCountryCode"
+        $AvmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -973,7 +973,7 @@ function Get-AvmVoipExistingNumber {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -983,7 +983,7 @@ function Get-AvmVoipExistingNumber {
         XmlResponse = "GetExistingVoIPNumbersResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipInfo {
@@ -1029,7 +1029,7 @@ function Get-AvmVoipInfo {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1039,7 +1039,7 @@ function Get-AvmVoipInfo {
         XmlResponse = "GetInfoResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipInfoEx {
@@ -1085,7 +1085,7 @@ function Get-AvmVoipInfoEx {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1095,7 +1095,7 @@ function Get-AvmVoipInfoEx {
         XmlResponse = "GetInfoExResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipMaxNumber {
@@ -1141,7 +1141,7 @@ function Get-AvmVoipMaxNumber {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1151,7 +1151,7 @@ function Get-AvmVoipMaxNumber {
         XmlResponse = "GetMaxVoIPNumbersResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipNumber {
@@ -1197,7 +1197,7 @@ function Get-AvmVoipNumber {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1207,7 +1207,7 @@ function Get-AvmVoipNumber {
         XmlResponse = "X_AVM-DE_GetNumbersResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipMaxNumber {
@@ -1253,7 +1253,7 @@ function Get-AvmVoipMaxNumber {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1263,7 +1263,7 @@ function Get-AvmVoipMaxNumber {
         XmlResponse = "X_AVM-DE_GetNumberOfAlarmClocksResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipNumberOfClient {
@@ -1309,7 +1309,7 @@ function Get-AvmVoipNumberOfClient {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1319,7 +1319,7 @@ function Get-AvmVoipNumberOfClient {
         XmlResponse = "X_AVM-DE_GetNumberOfClientsResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipNumberOfNumber {
@@ -1365,7 +1365,7 @@ function Get-AvmVoipNumberOfNumber {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    $splatParameters = @{
+    [System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -1375,7 +1375,7 @@ function Get-AvmVoipNumberOfNumber {
         XmlResponse = "X_AVM-DE_GetNumberOfNumbersResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
 
 function Get-AvmVoipPhonePort {
@@ -1426,27 +1426,27 @@ function Get-AvmVoipPhonePort {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_GetPhonePort"
-        $avmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_GetPhonePort"
+        $AvmWebrequestBody.InnerBody = "<s:NewIndex>{0}</s:NewIndex>" -f $NewIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -1498,27 +1498,27 @@ function Remove-AvmVoipAccounts {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_DelVoIPAccount"
-        $avmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_DelVoIPAccount"
+        $AvmWebrequestBody.InnerBody = "<s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>" -f $NewVoIPAccountIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -1570,27 +1570,27 @@ function Remove-AvmVoipClient {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_DeleteClient"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_DeleteClient"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>" -f $NewClientIndex
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -1646,30 +1646,30 @@ function Set-AvmVoipAlarmClockEnable {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetAlarmClockEnable"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_SetAlarmClockEnable"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewIndex>{0}</s:NewIndex>
 <s:NewX_AVM-DE_AlarmClockEnable>{1}</s:NewX_AVM-DE_AlarmClockEnable>
 "@ -f $NewIndex, $NewAlarmClockEnable
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -1737,12 +1737,12 @@ function Set-AvmVoipClient {
         $NewClientPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($SecurePointer)
         [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SecurePointer)
 
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetClient"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_SetClient"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>
 <s:NewX_AVM-DE_ClientPassword>{1}</s:NewX_AVM-DE_ClientPassword>
 <s:NewX_AVM-DE_PhoneName>{2}</s:NewX_AVM-DE_PhoneName>
@@ -1751,18 +1751,18 @@ function Set-AvmVoipClient {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -1834,12 +1834,12 @@ function Set-AvmVoipClient2 {
         $NewClientPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($SecurePointer)
         [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SecurePointer)
 
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetClient2"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_SetClient2"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>
 <s:NewX_AVM-DE_ClientPassword>{1}</s:NewX_AVM-DE_ClientPassword>
 <s:NewX_AVM-DE_PhoneName>{2}</s:NewX_AVM-DE_PhoneName>
@@ -1849,18 +1849,18 @@ function Set-AvmVoipClient2 {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -1940,12 +1940,12 @@ function Set-AvmVoipClient3 {
         $NewClientPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($SecurePointer)
         [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SecurePointer)
 
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetClient3"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_SetClient3"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>
 <s:NewX_AVM-DE_ClientPassword>{1}</s:NewX_AVM-DE_ClientPassword>
 <s:NewX_AVM-DE_PhoneName>{2}</s:NewX_AVM-DE_PhoneName>
@@ -1957,18 +1957,18 @@ function Set-AvmVoipClient3 {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2040,12 +2040,12 @@ function Set-AvmVoipClient4 {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetClient4"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_SetClient4"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>
 <s:NewX_AVM-DE_ClientPassword>{1}</s:NewX_AVM-DE_ClientPassword>
 <s:NewX_AVM-DE_ClientUsername>{2}</s:NewX_AVM-DE_ClientUsername>
@@ -2057,18 +2057,18 @@ function Set-AvmVoipClient4 {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2129,17 +2129,17 @@ function Set-AvmVoipCommonAreaCode {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
 
         if ($Deprecated) {
-            $avmWebrequestBody.Action = "SetVoIPCommonAreaCode"
-            $avmWebrequestBody.InnerBody = "<s:NewVoIPEnableAreaCode>{0}</s:NewVoIPEnableAreaCode>" -f $NewVoIPAreaCode
+            $AvmWebrequestBody.Action = "SetVoIPCommonAreaCode"
+            $AvmWebrequestBody.InnerBody = "<s:NewVoIPEnableAreaCode>{0}</s:NewVoIPEnableAreaCode>" -f $NewVoIPAreaCode
         } else {
-            $avmWebrequestBody.Action = "X_AVM-DE_SetVoIPCommonAreaCode"
-            $avmWebrequestBody.InnerBody = @"
+            $AvmWebrequestBody.Action = "X_AVM-DE_SetVoIPCommonAreaCode"
+            $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_OKZ>{0}</s:NewX_AVM-DE_OKZ>
 <s:NewX_AVM-DE_OKZPrefix>{1}</s:NewX_AVM-DE_OKZPrefix>
 "@ -f $NewOKZ, $NewOKZPrefix
@@ -2147,18 +2147,18 @@ function Set-AvmVoipCommonAreaCode {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2219,17 +2219,17 @@ function Set-AvmVoipCommonCountryCode {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
 
         if ($Deprecated) {
-            $avmWebrequestBody.Action = "SetVoIPCommonCountryCode"
-            $avmWebrequestBody.InnerBody = "<s:NewVoIPCountryCode>{0}</s:NewVoIPCountryCode>" -f $NewVoIPCountryCode
+            $AvmWebrequestBody.Action = "SetVoIPCommonCountryCode"
+            $AvmWebrequestBody.InnerBody = "<s:NewVoIPCountryCode>{0}</s:NewVoIPCountryCode>" -f $NewVoIPCountryCode
         } else {
-            $avmWebrequestBody.Action = "X_AVM-DE_SetVoIPCommonCountryCode"
-            $avmWebrequestBody.InnerBody = @"
+            $AvmWebrequestBody.Action = "X_AVM-DE_SetVoIPCommonCountryCode"
+            $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_LKZ>{0}</s:NewX_AVM-DE_LKZ>
 <s:NewX_AVM-DE_LKZPrefix >{1}</s:NewX_AVM-DE_LKZPrefix >
 "@ -f $NewLKZ, $NewPrefix 
@@ -2237,18 +2237,18 @@ function Set-AvmVoipCommonCountryCode {
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2304,30 +2304,30 @@ function Set-AvmVoipConfig {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "SetConfig"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "SetConfig"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewT38FaxEnable>{0}</s:NewT38FaxEnable>
 <s:NewVoiceCoding>{1}</s:NewVoiceCoding>
 "@ -f $NewT38FaxEnable, $NewVoiceCoding
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2383,30 +2383,30 @@ function Set-AvmVoipDelayedCallNotification {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_SetDelayedCallNotification"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_SetDelayedCallNotification"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewX_AVM-DE_ClientIndex>{0}</s:NewX_AVM-DE_ClientIndex>
 <s:NewX_AVM-DE_DelayedCallNotification>{1}</s:NewX_AVM-DE_DelayedCallNotification>
 "@ -f $NewClientIndex, $NewDelayedCallNotification
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2462,27 +2462,27 @@ function Set-AvmVoipDialConfig {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_DialSetConfig"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_PhoneName>{0}</s:NewX_AVM-DE_PhoneName>" -f $NewPhoneName
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_DialSetConfig"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_PhoneName>{0}</s:NewX_AVM-DE_PhoneName>" -f $NewPhoneName
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2538,30 +2538,30 @@ function Set-AvmVoipEnableAreaCode {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "SetVoIPEnableAreaCode"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "SetVoIPEnableAreaCode"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>
 <s:NewVoIPEnableAreaCode>{1}</s:NewVoIPEnableAreaCode>
 "@ -f $NewVoIPAccountIndex, $NewVoIPEnableAreaCode
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2617,30 +2617,30 @@ function Set-AvmVoipEnableCountryCode {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "SetVoIPEnableCountryCode"
-        $avmWebrequestBody.InnerBody = @"
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "SetVoIPEnableCountryCode"
+        $AvmWebrequestBody.InnerBody = @"
 <s:NewVoIPAccountIndex>{0}</s:NewVoIPAccountIndex>
 <s:NewVoIPEnableCountryCode>{1}</s:NewVoIPEnableCountryCode>
 "@ -f $NewVoIPAccountIndex, $NewVoIPEnableCountryCode
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2696,27 +2696,27 @@ function Start-AvmVoipDial {
     )
 
     Begin {
-        $avmWebrequestBody = [AvmBody]::new()
+        $AvmWebrequestBody = [AvmBody]::new()
 
-        $avmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
-        $avmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
-        $avmWebrequestBody.Action = "X_AVM-DE_DialNumber"
-        $avmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_PhoneNumber>{0}</s:NewX_AVM-DE_PhoneNumber>" -f $NewPhoneNumber
+        $AvmWebrequestBody.SoapAction = "urn:dslforum-org:service:X_VoIP:1"
+        $AvmWebrequestBody.UrlPath = "$(if ($RemoteAccess) { "/tr064" })/upnp/control/x_voip"
+        $AvmWebrequestBody.Action = "X_AVM-DE_DialNumber"
+        $AvmWebrequestBody.InnerBody = "<s:NewX_AVM-DE_PhoneNumber>{0}</s:NewX_AVM-DE_PhoneNumber>" -f $NewPhoneNumber
     }
 
     Process {
-        $splatParameters = @{
+        [System.Collections.Hashtable]$SplatParameters = @{
             Insecure = $Insecure
             Url = $Url
             Port = $Port
             Credential = $Credential
-            SoapAction = $avmWebrequestBody.GenerateSoapAction()
-            UrlPath = $avmWebrequestBody.UrlPath
-            Body = $avmWebrequestBody.GenerateBody()
-            XmlResponse = $avmWebrequestBody.GenerateXmlResponse()
+            SoapAction = $AvmWebrequestBody.GenerateSoapAction()
+            UrlPath = $AvmWebrequestBody.UrlPath
+            Body = $AvmWebrequestBody.GenerateBody()
+            XmlResponse = $AvmWebrequestBody.GenerateXmlResponse()
         }
 
-        Connect-AvmDevice @splatParameters
+        Connect-AvmDevice @SplatParameters
     }
 }
 
@@ -2763,7 +2763,7 @@ function Stop-AvmVoipDial {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    [System.Collections.Hashtable]$splatParameters = @{
+    [System.Collections.Hashtable][System.Collections.Hashtable]$SplatParameters = @{
         Insecure = $Insecure
         Url = $Url
         Port = $Port
@@ -2773,5 +2773,5 @@ function Stop-AvmVoipDial {
         XmlResponse = "X_AVM-DE_DialHangupResponse"
     }
 
-    Connect-AvmDevice @splatParameters
+    Connect-AvmDevice @SplatParameters
 }
