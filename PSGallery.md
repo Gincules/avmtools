@@ -22,6 +22,10 @@ avmtool will run on Windows PowerShell 5.1+ and popular 🐧Linux distributions 
 For more information, see [Install PowerShell on Linux](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux)
 
 
+## 💬 Discussions
+Share your ideas or join the [discussion](https://github.com/Gincules/avmtools/discussions)
+
+
 ## 💲 Licence
 [MIT license](https://github.com/Gincules/avmtools/blob/main/LICENSE) - free & open source
 
