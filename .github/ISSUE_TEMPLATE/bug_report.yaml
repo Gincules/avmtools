@@ -18,15 +18,15 @@ body:
         - Linux
         - macOS
     validations:
-      required: false
+      required: true
   - type: dropdown
     id: psversion
     attributes:
       label: What OS are you seeing the problem on?
-      multiple: true
+      multiple: false
       options:
-        - Windows PowerShell 5.1
         - PowerShell 7
+        - Windows PowerShell 5.1
     validations:
       required: true
   - type: textarea
